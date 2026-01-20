@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majestic - Tarot Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #0f172a;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: #1e293b;
+      border-right: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.mobile-hidden {
+      transform: translateX(-100%);
+    }
+
+    .sidebar-header {
+      padding: 2rem 1.5rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #a8b2d1;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #64748b;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.5rem 0;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: #334155;
+      color: #e2e8f0;
+    }
+
+    .nav-item.active {
+      background: #334155;
+      color: #a8b2d1;
+      border-left-color: #667eea;
+    }
+
+    .nav-icon {
+      font-size: 1.25rem;
+    }
+
+    .nav-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .sidebar-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #334155;
+      font-size: 0.75rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* Mobile Toggle */
+    .mobile-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 101;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.sidebar-hidden {
+      margin-left: 0;
+    }
+
+    .content-frame {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.mobile-visible {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+    }
+
+    /* Loading State */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #0f172a;
+    }
+
+    .spinner {
+      width: 3rem;
+      height: 3rem;
+      border: 3px solid #334155;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-toggle" onclick="toggleSidebar()">
+    <span style="font-size: 1.25rem;">☰</span>
+  </button>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">MAJESTIC</div>
+        <div class="tagline">Tarot Demo</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="navigateTo('onboarding')">
+          <span class="nav-icon">🔮</span>
+          <span class="nav-text">Onboarding Journey</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('showcase')">
+          <span class="nav-icon">🎴</span>
+          <span class="nav-text">Card Reading Engine</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        Demo Version • January 2026
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+      <div class="loading" id="loadingState">
+        <div class="spinner"></div>
+      </div>
+      <iframe 
+        class="content-frame" 
+        id="contentFrame" 
+        style="display: none;"
+        title="Majestic Content"
+      ></iframe>
+    </main>
+  </div>
+
+  <script>
+    let currentPage = 'onboarding';
+    let isMobile = window.innerWidth <= 768;
+
+    // Page routes
+    const routes = {
+      onboarding: 'onboarding.html',
+      showcase: 'chariot-showcase.html'
+    };
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      navigateTo('onboarding');
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        isMobile = window.innerWidth <= 768;
+      });
+    });
+
+    // Navigation
+    function navigateTo(page) {
+      if (currentPage === page) return;
+      
+      currentPage = page;
+      
+      // Update active state
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event?.target?.closest('.nav-item')?.classList.add('active');
+      
+      // Show loading
+      const frame = document.getElementById('contentFrame');
+      const loading = document.getElementById('loadingState');
+      
+      frame.style.display = 'none';
+      loading.style.display = 'flex';
+      
+      // Load new content
+      frame.src = routes[page];
+      
+      // Hide loading when loaded
+      frame.onload = () => {
+        loading.style.display = 'none';
+        frame.style.display = 'block';
+      };
+      
+      // Close sidebar on mobile after navigation
+      if (isMobile) {
+        toggleSidebar(false);
+      }
+    }
+
+    // Sidebar toggle for mobile
+    function toggleSidebar(show) {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      
+      if (show === undefined) {
+        sidebar.classList.toggle('mobile-visible');
+      } else if (show) {
+        sidebar.classList.add('mobile-visible');
+      } else {
+        sidebar.classList.remove('mobile-visible');
+      }
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (!isMobile) return;
+      
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.querySelector('.mobile-toggle');
+      
+      if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+        toggleSidebar(false);
+      }
+    });
+  </script>
+</body>
+</html>

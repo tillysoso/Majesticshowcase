@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majestic - Elijah First Reading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .container {
+      padding: 3rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .avatar-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .avatar-info h2 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #a855f7;
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .avatar-info p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .message-box {
+      background: rgba(30, 30, 50, 0.8);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      margin-bottom: 2rem;
+    }
+
+    .message-box p {
+      color: #e0e0e0;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .message-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .glitch {
+      animation: glitch 3s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 90%, 100% { transform: translate(0); }
+      92% { transform: translate(-2px, 2px); }
+      94% { transform: translate(2px, -2px); }
+      96% { transform: translate(-2px, -2px); }
+      98% { transform: translate(2px, 2px); }
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .card-display {
+      width: 16rem;
+      height: 24rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 1rem;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #a855f7;
+    }
+
+    .card-display::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .card-content {
+      text-align: center;
+      color: white;
+      z-index: 1;
+    }
+
+    .card-number {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .card-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .card-info {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-info h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #a855f7;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .keywords {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .keyword {
+      padding: 0.5rem 1rem;
+      background: rgba(168, 85, 247, 0.2);
+      color: #e9d5ff;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .shuffling-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .shuffling-card {
+      width: 8rem;
+      height: 12rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      animation: pulse-rotate 2s infinite;
+      border: 2px solid #a855f7;
+    }
+
+    @keyframes pulse-rotate {
+      0%, 100% { 
+        opacity: 1; 
+        transform: rotate(0deg) scale(1);
+      }
+      25% { 
+        transform: rotate(5deg) scale(1.05);
+      }
+      50% { 
+        opacity: 0.7;
+        transform: rotate(-5deg) scale(0.95);
+      }
+      75% { 
+        transform: rotate(5deg) scale(1.05);
+      }
+    }
+
+    .shuffling-text {
+      color: #a855f7;
+      animation: pulse 2s infinite;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .mini-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(30, 30, 50, 0.8);
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .mini-card-img {
+      width: 4rem;
+      height: 6rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border: 2px solid #a855f7;
+    }
+
+    .mini-card-info h3 {
+      font-weight: 600;
+      color: #a855f7;
+    }
+
+    .mini-card-info p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .interpretation-box {
+      background: rgba(30, 30, 50, 0.8);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .elijah-message {
+      color: #e0e0e0;
+      line-height: 1.8;
+    }
+
+    .elijah-message strong {
+      color: #a855f7;
+      font-weight: 700;
+    }
+
+    .elijah-message em {
+      color: #ec4899;
+      font-style: italic;
+    }
+
+    .ascii-art {
+      font-family: monospace;
+      font-size: 0.7rem;
+      line-height: 1.2;
+      color: #a855f7;
+      text-align: center;
+      margin: 1rem 0;
+      white-space: pre;
+    }
+
+    .riddle-box {
+      background: rgba(168, 85, 247, 0.1);
+      border-left: 4px solid #a855f7;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #e9d5ff;
+    }
+
+    .meme-reference {
+      background: rgba(236, 72, 153, 0.1);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin: 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #fbbf24;
+      border: 1px dashed #ec4899;
+    }
+
+    .strengths-box {
+      background: rgba(30, 30, 50, 0.8);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .strengths-box h4 {
+      font-weight: 600;
+      color: #a855f7;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+    }
+
+    .item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: start;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: rgba(168, 85, 247, 0.05);
+      border-radius: 0.5rem;
+      border-left: 3px solid #a855f7;
+    }
+
+    .item:last-child {
+      margin-bottom: 0;
+    }
+
+    .symbol {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .item-content p:first-child {
+      font-weight: 600;
+      color: #e9d5ff;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .item-content p:last-child {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.5;
+    }
+
+    .affirmation-box {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+      margin-bottom: 1.5rem;
+      border: 2px solid #a855f7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .affirmation-box::before {
+      content: '✦';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 2rem;
+      color: rgba(168, 85, 247, 0.3);
+    }
+
+    .affirmation-box::after {
+      content: '✦';
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 2rem;
+      color: rgba(236, 72, 153, 0.3);
+    }
+
+    .affirmation-box p {
+      color: white;
+      text-align: center;
+      font-weight: 600;
+      font-style: italic;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chips-section {
+      margin-top: auto;
+    }
+
+    .chips-label {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .chip {
+      width: 100%;
+      background: rgba(30, 30, 50, 0.8);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .chip:hover {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.2);
+      transform: translateX(5px);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .chip-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .chip-text {
+      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .xp-display {
+      text-align: right;
+    }
+
+    .xp-display p:first-child {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .xp-display p:last-child {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #a855f7;
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .conversation-thread {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+
+    .context-card {
+      background: rgba(30, 30, 50, 0.8);
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .context-card p:first-child {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .context-card p:last-child {
+      font-weight: 600;
+      color: #a855f7;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      display: flex;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.elijah {
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 80%;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+    }
+
+    .message.elijah .message-bubble {
+      background: rgba(30, 30, 50, 0.8);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    }
+
+    .message-text {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .message.elijah .message-text {
+      color: #e0e0e0;
+    }
+
+    .xp-badge {
+      font-size: 0.75rem;
+      color: #a855f7;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .input-field {
+      flex: 1;
+      background: rgba(30, 30, 50, 0.8);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      outline: none;
+      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .input-field:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .send-btn {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .scrollable {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .back-button {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .back-button:hover {
+      color: #a855f7;
+      transform: translateX(-5px);
+    }
+
+    .back-button span {
+      font-size: 0.875rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .save-button {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(30, 30, 50, 0.9);
+      border: 2px solid #a855f7;
+      color: #a855f7;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1000;
+      font-family: 'Courier New', monospace;
+      text-transform: lowercase;
+    }
+
+    .save-button:hover {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      border-color: #ec4899;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .save-button.saved {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      border-color: #a855f7;
+    }
+
+    .save-icon {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .save-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    .tldr-box {
+      background: rgba(236, 72, 153, 0.2);
+      border: 2px dashed #ec4899;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .tldr-box strong {
+      color: #fbbf24;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+
+    .tldr-box p {
+      color: #e0e0e0;
+      margin-top: 0.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <a href="chariot-showcase.html" style="position: fixed; top: 1rem; left: 1rem; background: rgba(168, 85, 247, 0.9); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;" onmouseover="this.style.background='#a855f7'; this.style.transform='translateX(-3px)'" onmouseout="this.style.background='rgba(168, 85, 247, 0.9)'; this.style.transform='translateX(0)'">
+    <span style="font-size: 1.2rem;">←</span>
+    <span>back to showcase</span>
+  </a>
+
+  <script>
+    // State
+    let stage = 'welcome';
+    let conversation = [];
+    let relationshipXP = 0;
+    let userMessage = '';
+    let isFirstTime = true; // Set to false when coming from saved readings
+    let isSaved = false;
+
+    // Data
+    const drawnCard = {
+      id: 'the-chariot',
+      name: 'The Chariot',
+      number: 7,
+      keywords: ['willpower', 'determination', 'control', 'victory'],
+      strengths: [
+        { label: 'Control', description: 'The ability to harness opposing forces', symbol: '⚡' },
+        { label: 'Initiative', description: 'Taking decisive action', symbol: '🎯' },
+        { label: 'Momentum', description: 'Using forward motion to maintain progress', symbol: '🚀' }
+      ],
+      weaknesses: [
+        { label: 'Rigidity', description: 'Being too focused on the destination', symbol: '🧱' },
+        { label: 'Burnout', description: 'Pushing too hard', symbol: '🔥' },
+        { label: 'Aggression', description: 'Letting drive override compassion', symbol: '⚔️' }
+      ]
+    };
+
+    const elijahContent = {
+      dailyDrawIntro: `hear me out—
+
+The Chariot is basically that moment when you stop asking permission and just... <strong>GO</strong>. 
+
+<div class="ascii-art">
+    ╔══════════════╗
+    ║  ⚡YOU→→→  ║
+    ╚══════════════╝
+</div>
+
+But here's the thing: it's not about brute force. It's about <em>alignment</em>. Like when you're listening to music and suddenly the beat drops EXACTLY when you need it to. That's Chariot energy.
+
+<div class="riddle-box">
+🌀 riddle for you: what moves fastest? the one who pushes hardest, or the one who removes friction?
+</div>
+
+<div class="tldr-box">
+<strong>tl;dr:</strong>
+<p>You already know what to do. The universe is literally giving you the green light. The only question is: are you gonna sit there or are you gonna DRIVE? 💨</p>
+</div>`,
+      
+      affirmation: "I'm the driver AND the destination // momentum finds me when I stop waiting"
+    };
+
+    const questionChips = [
+      { id: 'love', text: "What does this mean for love?", icon: '💕' },
+      { id: 'stuck', text: "I feel stuck though...", icon: '🌀' },
+      { id: 'career', text: "How does this apply to my career?", icon: '✨' }
+    ];
+
+    const responses = {
+      love: {
+        message: "okay so The Chariot in love is FASCINATING because... *gestures wildly* ...it's not about chasing someone. It's about knowing your direction and letting the right people catch up to you?\n\nLike think about it: when you're truly moving toward something (not away from something, big difference), you naturally attract people who are going the same direction. The ones who aren't? They fall away. Not because you're pushing them—just physics.\n\nBut watch out for the Rigidity trap: sometimes we get so locked into our \"perfect relationship vision\" that we miss what's actually happening right in front of us. Are you driving toward love or toward a fantasy? 🎭",
+        xp: 2
+      },
+      stuck: {
+        message: "oof yeah that's the WORST. Getting a movement card when you feel like you're in cement.\n\nBut here's where it gets interesting: The Chariot isn't always about external movement. Sometimes it's about *internal alignment*. Like... imagine you're trying to move forward but your front wheels are pointing left and your back wheels are pointing right. You're not stuck because you're weak—you're stuck because your forces are canceling each other out.\n\nSo the question isn't \"how do I move?\" The question is: \"what part of me is pulling in a different direction, and why?\" 🧩\n\nOnce you align those internal forces? You won't even have to push. You'll just... go.",
+        xp: 3
+      },
+      career: {
+        message: "Career + Chariot = main character energy at work\n\nThis is the card that shows up when you're done waiting for someone to give you permission. Whether that's pitching the idea, asking for the raise, starting the side project, or just *deciding* you're leadership material now.\n\nThe Momentum strength is KEY here: sometimes you don't need the perfect plan. You need to start moving, because motion creates its own opportunities. (See also: every successful startup ever.)\n\nJust watch the Aggression shadow: steamrolling your team to hit your goals is... not it. Channel that drive into creating space for everyone to level up together. 🎯",
+        xp: 2
+      }
+    };
+
+    // Render functions
+    function renderWelcome() {
+      return `
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon glitch">💨</div>
+            <div class="avatar-info">
+              <h2>Elijah</h2>
+              <p>Air Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="message-box">
+              <p>yo! okay so I'm Elijah and I'm gonna be real with you—</p>
+              <p>tarot isn't magic. it's a mirror. it's a way to trick your brain into admitting things you already know but won't say out loud. cool? cool.</p>
+              <div class="meme-reference">
+                📱 [insert that Spider-Man pointing meme but it's you and the cards]
+              </div>
+              <p>ready to see what your subconscious has been trying to tell you?</p>
+            </div>
+
+            <button class="btn-primary" onclick="nextStage('shuffling')">shuffle the deck</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderShuffling() {
+      setTimeout(() => nextStage('card-reveal'), 2000);
+      return `
+        <div class="shuffling-screen">
+          <div class="shuffling-card"></div>
+          <p class="shuffling-text">shuffling the chaos...</p>
+        </div>
+      `;
+    }
+
+    function renderCardReveal() {
+      return `
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon glitch">💨</div>
+            <div class="avatar-info">
+              <h2>Elijah</h2>
+              <p>Air Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="card-display">
+              <div class="card-content">
+                <p class="card-number">VII</p>
+                <p class="card-name">THE CHARIOT</p>
+              </div>
+            </div>
+
+            <div class="card-info">
+              <h3>The Chariot</h3>
+              <div class="keywords">
+                ${drawnCard.keywords.map(k => `<span class="keyword">${k}</span>`).join('')}
+              </div>
+            </div>
+
+            <button class="btn-primary" onclick="nextStage('interpretation')">decode this →</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderInterpretation() {
+      return `
+        ${!isFirstTime ? `
+        <button class="save-button ${isSaved ? 'saved' : ''}" onclick="saveReading()">
+          <span class="save-icon">${isSaved ? '✓' : '♡'}</span>
+          <span>${isSaved ? 'saved' : 'save reading'}</span>
+        </button>
+        ` : ''}
+        
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon glitch">💨</div>
+            <div class="avatar-info">
+              <h2>Elijah</h2>
+              <p>Air Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="scrollable">
+            <div class="mini-card">
+              <div class="mini-card-img">VII</div>
+              <div class="mini-card-info">
+                <h3>The Chariot</h3>
+                <p>Card 7 of 22 • Major Arcana</p>
+              </div>
+            </div>
+
+            <div class="interpretation-box">
+              <div class="elijah-message">${elijahContent.dailyDrawIntro}</div>
+            </div>
+
+            <div class="strengths-box">
+              <h4>✦ Powers Unlocked</h4>
+              ${drawnCard.strengths.map(s => `
+                <div class="item">
+                  <div class="symbol">${s.symbol}</div>
+                  <div class="item-content">
+                    <p>${s.label}</p>
+                    <p>${s.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+              
+              <h4 style="margin-top: 1.5rem;">⚠️ Watch Out For</h4>
+              ${drawnCard.weaknesses.map(w => `
+                <div class="item">
+                  <div class="symbol">${w.symbol}</div>
+                  <div class="item-content">
+                    <p>${w.label}</p>
+                    <p>${w.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="affirmation-box">
+              <p>"${elijahContent.affirmation}"</p>
+            </div>
+          </div>
+
+          <div class="chips-section">
+            <p class="chips-label">got questions? hit me</p>
+            ${questionChips.map(chip => `
+              <button class="chip" onclick="handleChipClick('${chip.id}')">
+                <span class="chip-icon">${chip.icon}</span>
+                <span class="chip-text">${chip.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderConversation() {
+      return `
+        ${!isFirstTime ? `
+        <button class="save-button ${isSaved ? 'saved' : ''}" onclick="saveReading()">
+          <span class="save-icon">${isSaved ? '✓' : '♡'}</span>
+          <span>${isSaved ? 'saved' : 'save reading'}</span>
+        </button>
+        ` : ''}
+        
+        <div class="container">
+          <button class="back-button" onclick="goBack()">
+            <span>←</span>
+            <span>back to reading</span>
+          </button>
+          
+          <div class="conversation-header">
+            <div class="header" style="margin: 0;">
+              <div class="avatar-icon glitch">💨</div>
+              <div class="avatar-info">
+                <h2>Elijah</h2>
+                <p>Air Guide • Level 1</p>
+              </div>
+            </div>
+            <div class="xp-display">
+              <p>Relationship</p>
+              <p>${relationshipXP} XP</p>
+            </div>
+          </div>
+
+          <div class="conversation-thread">
+            <div class="context-card">
+              <p>your card</p>
+              <p>The Chariot</p>
+            </div>
+
+            ${conversation.map(msg => `
+              <div class="message ${msg.speaker}">
+                <div class="message-bubble">
+                  <p class="message-text">${msg.text}</p>
+                  ${msg.xp ? `<p class="xp-badge">+${msg.xp} XP</p>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="chips-section" style="margin-bottom: 1rem;">
+            ${questionChips.filter(chip => !conversation.some(msg => msg.text === chip.text)).map(chip => `
+              <button class="chip" onclick="handleChipClick('${chip.id}')">
+                <span class="chip-icon">${chip.icon}</span>
+                <span class="chip-text">${chip.text}</span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="input-area">
+            <input 
+              type="text" 
+              class="input-field" 
+              placeholder="type your question..."
+              id="messageInput"
+              onkeypress="if(event.key==='Enter') sendMessage()"
+            />
+            <button class="send-btn" onclick="sendMessage()">
+              →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Event handlers
+    function nextStage(newStage) {
+      stage = newStage;
+      render();
+    }
+
+    function goBack() {
+      stage = 'interpretation';
+      render();
+    }
+
+    function saveReading() {
+      const reading = {
+        date: new Date().toISOString(),
+        card: drawnCard,
+        avatar: 'elijah',
+        conversation: conversation,
+        xp: relationshipXP
+      };
+      
+      localStorage.setItem('lastReading', JSON.stringify(reading));
+      isSaved = true;
+      render();
+      
+      setTimeout(() => {
+        alert('✓ reading saved // find it in your journal');
+      }, 100);
+    }
+
+    function handleChipClick(chipId) {
+      const chip = questionChips.find(c => c.id === chipId);
+      const response = responses[chipId];
+      
+      conversation.push(
+        { speaker: 'user', text: chip.text },
+        { speaker: 'elijah', text: response.message, xp: response.xp }
+      );
+      relationshipXP += response.xp;
+      
+      nextStage('conversation');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input ? input.value.trim() : '';
+      
+      if (!message) return;
+      
+      conversation.push({ speaker: 'user', text: message });
+      render();
+      
+      setTimeout(() => {
+        conversation.push({
+          speaker: 'elijah',
+          text: "okay I'm listening. keep going—what's actually coming up for you rn?",
+          xp: 1
+        });
+        relationshipXP += 1;
+        render();
+      }, 1000);
+    }
+
+    // Main render
+    function render() {
+      const app = document.getElementById('app');
+      
+      switch(stage) {
+        case 'welcome':
+          app.innerHTML = renderWelcome();
+          break;
+        case 'shuffling':
+          app.innerHTML = renderShuffling();
+          break;
+        case 'card-reveal':
+          app.innerHTML = renderCardReveal();
+          break;
+        case 'interpretation':
+          app.innerHTML = renderInterpretation();
+          break;
+        case 'conversation':
+          app.innerHTML = renderConversation();
+          break;
+      }
+    }
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>

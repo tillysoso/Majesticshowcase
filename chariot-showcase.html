@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Chariot - Majestic Tarot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #e0e0e0;
+      padding: 3rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #a8b2d1;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    .tagline {
+      color: #8892b0;
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    .card-showcase {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(168, 178, 209, 0.1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-display {
+      width: 14rem;
+      height: 21rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 1rem;
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+      border: 2px solid rgba(168, 178, 209, 0.3);
+    }
+
+    .card-content {
+      text-align: center;
+      color: white;
+    }
+
+    .card-number {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+
+    .card-name {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+    }
+
+    .card-info {
+      text-align: center;
+    }
+
+    .card-title {
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #a8b2d1;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .keywords {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .keyword {
+      padding: 0.5rem 1rem;
+      background: rgba(102, 126, 234, 0.2);
+      color: #a8b2d1;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .interpretation-section {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #667eea;
+    }
+
+    .interpretation-section h3 {
+      color: #a8b2d1;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .interpretation-section p {
+      color: #ccd6f6;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .interpretation-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .symbolism-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .symbol-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(168, 178, 209, 0.1);
+    }
+
+    .symbol-card h4 {
+      color: #667eea;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .symbol-card p {
+      color: #8892b0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 178, 209, 0.3), transparent);
+      margin: 3rem 0;
+    }
+
+    .avatars-section {
+      margin-top: 3rem;
+    }
+
+    .avatars-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .avatars-header h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      color: #a8b2d1;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .avatars-header p {
+      color: #8892b0;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .avatars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .avatar-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+      text-decoration: none;
+      display: block;
+    }
+
+    .avatar-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .avatar-card.olivia {
+      border-color: rgba(107, 142, 35, 0.3);
+    }
+
+    .avatar-card.olivia:hover {
+      border-color: #6b8e23;
+      box-shadow: 0 10px 30px rgba(107, 142, 35, 0.3);
+    }
+
+    .avatar-card.elijah {
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+
+    .avatar-card.elijah:hover {
+      border-color: #a855f7;
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+    }
+
+    .avatar-card.casper {
+      border-color: rgba(255, 107, 53, 0.3);
+    }
+
+    .avatar-card.casper:hover {
+      border-color: #ff6b35;
+      box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    }
+
+    .avatar-card.destiny {
+      border-color: rgba(13, 148, 136, 0.3);
+    }
+
+    .avatar-card.destiny:hover {
+      border-color: #0d9488;
+      box-shadow: 0 10px 30px rgba(13, 148, 136, 0.3);
+    }
+
+    .avatar-icon {
+      width: 4rem;
+      height: 4rem;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .olivia .avatar-icon {
+      background: linear-gradient(135deg, #6b8e23, #556b2f);
+      box-shadow: 0 0 20px rgba(107, 142, 35, 0.4);
+    }
+
+    .elijah .avatar-icon {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    }
+
+    .casper .avatar-icon {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+    }
+
+    .destiny .avatar-icon {
+      background: linear-gradient(135deg, #0d9488, #14b8a6);
+      box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
+    }
+
+    .avatar-card h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .olivia h3 { color: #a8b896; }
+    .elijah h3 { color: #c084fc; }
+    .casper h3 { color: #ffa366; }
+    .destiny h3 { color: #5eead4; }
+
+    .avatar-element {
+      color: #8892b0;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+
+    .avatar-description {
+      color: #ccd6f6;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar-cta {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .olivia .avatar-cta {
+      background: rgba(107, 142, 35, 0.2);
+      color: #a8b896;
+      border: 1px solid rgba(107, 142, 35, 0.3);
+    }
+
+    .olivia:hover .avatar-cta {
+      background: #6b8e23;
+      color: white;
+    }
+
+    .elijah .avatar-cta {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .elijah:hover .avatar-cta {
+      background: #a855f7;
+      color: white;
+    }
+
+    .casper .avatar-cta {
+      background: rgba(255, 107, 53, 0.2);
+      color: #ffa366;
+      border: 1px solid rgba(255, 107, 53, 0.3);
+    }
+
+    .casper:hover .avatar-cta {
+      background: #ff6b35;
+      color: white;
+    }
+
+    .destiny .avatar-cta {
+      background: rgba(13, 148, 136, 0.2);
+      color: #5eead4;
+      border: 1px solid rgba(13, 148, 136, 0.3);
+    }
+
+    .destiny:hover .avatar-cta {
+      background: #0d9488;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(168, 178, 209, 0.1);
+      color: #8892b0;
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      .card-showcase {
+        padding: 2rem 1.5rem;
+      }
+
+      .avatars-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="logo">MAJESTIC</h1>
+      <p class="tagline">Intuitive Tarot Guidance</p>
+    </div>
+
+    <!-- Card Showcase -->
+    <div class="card-showcase">
+      <div class="card-display">
+        <div class="card-content">
+          <div class="card-number">VII</div>
+          <div class="card-name">THE CHARIOT</div>
+        </div>
+      </div>
+
+      <div class="card-info">
+        <h2 class="card-title">The Chariot</h2>
+        <div class="keywords">
+          <span class="keyword">Willpower</span>
+          <span class="keyword">Determination</span>
+          <span class="keyword">Control</span>
+          <span class="keyword">Victory</span>
+          <span class="keyword">Direction</span>
+        </div>
+      </div>
+
+      <!-- Core Meaning -->
+      <div class="interpretation-section">
+        <h3>Core Meaning</h3>
+        <p>The Chariot represents the triumph of willpower over adversity. This is the card of directed action, purposeful movement, and the ability to harness opposing forces toward a unified goal. It speaks to moments when clarity of purpose meets the courage to act.</p>
+        <p>Unlike cards of passive reception or contemplation, The Chariot demands engagement. It asks: What are you moving toward? And what internal or external forces must you align to get there?</p>
+      </div>
+
+      <!-- Symbolism -->
+      <div class="interpretation-section">
+        <h3>Symbolism & Imagery</h3>
+        <div class="symbolism-grid">
+          <div class="symbol-card">
+            <h4>The Charioteer</h4>
+            <p>A figure stands firm, representing mastery over the self and clarity of intention. Not passive, but actively directing.</p>
+          </div>
+          <div class="symbol-card">
+            <h4>Two Sphinxes</h4>
+            <p>Opposing forces (light and dark, conscious and unconscious) that must be balanced and directed rather than resisted.</p>
+          </div>
+          <div class="symbol-card">
+            <h4>The Armor</h4>
+            <p>Protection and preparation. The journey requires both vulnerability and defense, knowing when each is appropriate.</p>
+          </div>
+          <div class="symbol-card">
+            <h4>The Starry Canopy</h4>
+            <p>Connection to higher purpose. Movement is not aimless—it's guided by vision and aligned with cosmic order.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upright -->
+      <div class="interpretation-section">
+        <h3>When Upright</h3>
+        <p><strong>Strengths to embrace:</strong> Control (the ability to harness opposing forces), Initiative (taking decisive action), Momentum (using forward motion to maintain progress)</p>
+        <p><strong>Key questions:</strong> What destination am I moving toward? What forces—internal or external—need alignment? Where am I already experiencing momentum, and how can I sustain it?</p>
+      </div>
+
+      <!-- Shadow -->
+      <div class="interpretation-section">
+        <h3>Shadow Aspects</h3>
+        <p><strong>Challenges to notice:</strong> Rigidity (being so focused on the destination you miss better paths), Burnout (pushing too hard without rest), Aggression (letting drive override compassion or collaboration)</p>
+        <p><strong>The invitation:</strong> The Chariot's shadow asks you to examine whether your movement is sustainable. Are you driving yourself—or others—into exhaustion? Is your commitment to the goal preventing necessary flexibility?</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Avatars Section -->
+    <div class="avatars-section">
+      <div class="avatars-header">
+        <h2>Choose Your Guide</h2>
+        <p>Each avatar offers a unique lens through which to understand The Chariot. Same card, four distinct perspectives—<br>because insight is never one-size-fits-all.</p>
+      </div>
+
+      <div class="avatars-grid">
+        <!-- Olivia -->
+        <a href="olivia-first-reading-vanilla.html" class="avatar-card olivia">
+          <div class="avatar-icon">🌿</div>
+          <h3>Olivia</h3>
+          <p class="avatar-element">Earth • Grounded Support</p>
+          <p class="avatar-description">Warm, emotionally attuned girls-girl energy. Olivia keeps you grounded while helping you trust yourself.</p>
+          <span class="avatar-cta">Read with Olivia →</span>
+        </a>
+
+        <!-- Elijah -->
+        <a href="elijah-first-reading.html" class="avatar-card elijah">
+          <div class="avatar-icon">💨</div>
+          <h3>Elijah</h3>
+          <p class="avatar-element">Air • Creative Chaos</p>
+          <p class="avatar-description">Non-linear, riddled with insight, and culturally coded. Elijah challenges you to think differently.</p>
+          <span class="avatar-cta">Read with Elijah →</span>
+        </a>
+
+        <!-- Casper -->
+        <a href="casper-first-reading.html" class="avatar-card casper">
+          <div class="avatar-icon">🔥</div>
+          <h3>Casper</h3>
+          <p class="avatar-element">Fire • Direct Action</p>
+          <p class="avatar-description">No-nonsense, action-oriented coaching. Casper cuts through excuses and gets you moving.</p>
+          <span class="avatar-cta">Read with Casper →</span>
+        </a>
+
+        <!-- Destiny -->
+        <a href="destiny-first-reading.html" class="avatar-card destiny">
+          <div class="avatar-icon">💧</div>
+          <h3>Destiny</h3>
+          <p class="avatar-element">Water • Intuitive Wisdom</p>
+          <p class="avatar-description">Intense, emotionally intuitive, and deeply perceptive. Destiny helps you navigate emotional depths with clarity.</p>
+          <span class="avatar-cta">Read with Destiny →</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Majestic • AI-Powered Tarot for Self-Discovery</p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #5a6374;">The Chariot Interpretation Showcase</p>
+    </div>
+  </div>
+</body>
+</html>

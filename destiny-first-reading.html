@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majestic - Destiny First Reading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(to bottom, #1a2e2e 0%, #2d4a4a 50%, #3e5555 100%);
+      min-height: 100vh;
+      color: #e8eae6;
+    }
+
+    .container {
+      padding: 2.5rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .avatar-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(107, 142, 35, 0.4);
+      border: 2px solid #14b8a6;
+    }
+
+    .avatar-info h2 {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #5eead4;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+    }
+
+    .avatar-info p {
+      font-size: 0.875rem;
+      color: #b2dfdb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .message-box {
+      background: rgba(28, 45, 28, 0.9);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      margin-bottom: 2rem;
+      border-left: 4px solid #0d9488;
+    }
+
+    .message-box p {
+      color: #e8eae6;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .message-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-box em {
+      color: #5eead4;
+      font-style: italic;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Georgia', serif;
+      box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(107, 142, 35, 0.5);
+    }
+
+    .card-display {
+      width: 16rem;
+      height: 24rem;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      border-radius: 0.75rem;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 3px solid #14b8a6;
+    }
+
+    .card-content {
+      text-align: center;
+      color: white;
+    }
+
+    .card-number {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      font-weight: 300;
+      font-family: 'Georgia', serif;
+    }
+
+    .card-name {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      font-family: 'Georgia', serif;
+    }
+
+    .card-info {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-info h3 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: #5eead4;
+      letter-spacing: 0.1em;
+      font-family: 'Georgia', serif;
+    }
+
+    .keywords {
+      display: flex;
+      gap: 0.5rem;
+      justify-center: center;
+      flex-wrap: wrap;
+    }
+
+    .keyword {
+      padding: 0.5rem 1rem;
+      background: rgba(107, 142, 35, 0.2);
+      color: #b2dfdb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      border: 1px solid rgba(107, 142, 35, 0.4);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .shuffling-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .shuffling-card {
+      width: 8rem;
+      height: 12rem;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: gentle-pulse 2s ease-in-out infinite;
+      border: 3px solid #14b8a6;
+    }
+
+    @keyframes gentle-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    .shuffling-text {
+      color: #5eead4;
+      animation: pulse 2s infinite;
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.1em;
+    }
+
+    .mini-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(28, 45, 28, 0.9);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .mini-card-img {
+      width: 4rem;
+      height: 6rem;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 300;
+      border: 2px solid #14b8a6;
+      font-family: 'Georgia', serif;
+    }
+
+    .mini-card-info h3 {
+      font-weight: 400;
+      color: #5eead4;
+      font-family: 'Georgia', serif;
+    }
+
+    .mini-card-info p {
+      font-size: 0.875rem;
+      color: #b2dfdb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .interpretation-box {
+      background: rgba(28, 45, 28, 0.9);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #0d9488;
+    }
+
+    .destiny-message {
+      color: #e8eae6;
+      line-height: 1.9;
+    }
+
+    .destiny-message h4 {
+      color: #5eead4;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(107, 142, 35, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    .destiny-message p {
+      margin-bottom: 1rem;
+    }
+
+    .destiny-message em {
+      color: #5eead4;
+      font-style: italic;
+    }
+
+    .framework-box {
+      background: rgba(107, 142, 35, 0.1);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .framework-box h5 {
+      color: #5eead4;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+    }
+
+    .framework-box ol {
+      margin: 0;
+      padding-left: 1.5rem;
+      color: #e8eae6;
+    }
+
+    .framework-box li {
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+
+    .reflection-box {
+      background: rgba(107, 142, 35, 0.05);
+      border-left: 3px solid #0d9488;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #b2dfdb;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .strengths-box {
+      background: rgba(28, 45, 28, 0.9);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .strengths-box h4 {
+      font-weight: 400;
+      color: #5eead4;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(107, 142, 35, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    .item {
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      background: rgba(107, 142, 35, 0.05);
+      border-radius: 0.5rem;
+      border-left: 3px solid #0d9488;
+    }
+
+    .item:last-child {
+      margin-bottom: 0;
+    }
+
+    .symbol {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .item-content p:first-child {
+      font-weight: 500;
+      color: #5eead4;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      font-family: 'Georgia', serif;
+    }
+
+    .item-content p:last-child {
+      color: #b2dfdb;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .affirmation-box {
+      background: linear-gradient(135deg, rgba(107, 142, 35, 0.25), rgba(85, 107, 47, 0.25));
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(107, 142, 35, 0.2);
+      margin-bottom: 1.5rem;
+      border: 2px solid rgba(107, 142, 35, 0.4);
+    }
+
+    .affirmation-box p {
+      color: #e8eae6;
+      text-align: center;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      font-family: 'Georgia', serif;
+    }
+
+    .chips-section {
+      margin-top: auto;
+    }
+
+    .chips-label {
+      color: #b2dfdb;
+      font-size: 0.875rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+    }
+
+    .chip {
+      width: 100%;
+      background: rgba(28, 45, 28, 0.9);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      border-radius: 0.5rem;
+      padding: 0.875rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .chip:hover {
+      border-color: #0d9488;
+      background: rgba(107, 142, 35, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .chip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .chip-text {
+      color: #e8eae6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .xp-display {
+      text-align: right;
+    }
+
+    .xp-display p:first-child {
+      font-size: 0.875rem;
+      color: #b2dfdb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .xp-display p:last-child {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #5eead4;
+    }
+
+    .conversation-thread {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+
+    .context-card {
+      background: rgba(28, 45, 28, 0.9);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .context-card p:first-child {
+      font-size: 0.875rem;
+      color: #b2dfdb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .context-card p:last-child {
+      font-weight: 500;
+      color: #5eead4;
+      font-family: 'Georgia', serif;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      display: flex;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.destiny {
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 80%;
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: white;
+    }
+
+    .message.destiny .message-bubble {
+      background: rgba(28, 45, 28, 0.9);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .message-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .message.destiny .message-text {
+      color: #e8eae6;
+    }
+
+    .xp-badge {
+      font-size: 0.75rem;
+      color: #5eead4;
+      margin-top: 0.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .input-field {
+      flex: 1;
+      background: rgba(28, 45, 28, 0.9);
+      border: 1px solid rgba(107, 142, 35, 0.3);
+      border-radius: 0.5rem;
+      padding: 0.875rem 1.25rem;
+      font-size: 1rem;
+      outline: none;
+      color: #e8eae6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .input-field:focus {
+      border-color: #0d9488;
+      box-shadow: 0 0 0 2px rgba(107, 142, 35, 0.2);
+    }
+
+    .send-btn {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(107, 142, 35, 0.4);
+    }
+
+    .scrollable {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .back-button {
+      background: transparent;
+      border: none;
+      color: #b2dfdb;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .back-button:hover {
+      color: #5eead4;
+      transform: translateX(-5px);
+    }
+
+    .back-button span {
+      font-size: 0.875rem;
+      font-family: 'Georgia', serif;
+    }
+
+    .save-button {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(28, 45, 28, 0.95);
+      border: 2px solid #0d9488;
+      color: #5eead4;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1000;
+      font-family: 'Georgia', serif;
+    }
+
+    .save-button:hover {
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(107, 142, 35, 0.5);
+    }
+
+    .save-button.saved {
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: white;
+    }
+
+    .save-icon {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .save-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <a href="chariot-showcase.html" style="position: fixed; top: 1rem; left: 1rem; background: rgba(13, 148, 136, 0.9); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; font-family: 'Georgia', serif;" onmouseover="this.style.background='#0d9488'; this.style.transform='translateX(-3px)'" onmouseout="this.style.background='rgba(13, 148, 136, 0.9)'; this.style.transform='translateX(0)'">
+    <span style="font-size: 1.2rem;">←</span>
+    <span>Return to Showcase</span>
+  </a>
+
+  <script>
+    // State
+    let stage = 'welcome';
+    let conversation = [];
+    let relationshipXP = 0;
+    let userMessage = '';
+    let isFirstTime = true;
+    let isSaved = false;
+
+    // Data
+    const drawnCard = {
+      id: 'the-chariot',
+      name: 'The Chariot',
+      number: 7,
+      keywords: ['willpower', 'determination', 'control', 'victory'],
+      strengths: [
+        { label: 'Control', description: 'The ability to harness opposing forces', symbol: '💧' },
+        { label: 'Initiative', description: 'Taking decisive action', symbol: '🌱' },
+        { label: 'Momentum', description: 'Using forward motion to maintain progress', symbol: '🍃' }
+      ],
+      weaknesses: [
+        { label: 'Rigidity', description: 'Being too focused on the destination', symbol: '🪨' },
+        { label: 'Burnout', description: 'Pushing too hard', symbol: '🔥' },
+        { label: 'Aggression', description: 'Letting drive override compassion', symbol: '⚡' }
+      ]
+    };
+
+    const destinyContent = {
+      dailyDrawIntro: `<h4>The Chariot: A Study in Directed Will</h4>
+
+<p>The Chariot speaks to the convergence of intention and action. This is not impulsive movement—it is <em>purposeful momentum</em>. Consider it the difference between scattered effort and focused trajectory.</p>
+
+<div class="framework-box">
+<h5>The Three-Phase Framework</h5>
+<ol>
+<li><strong>Clarity:</strong> Define the destination with precision</li>
+<li><strong>Commitment:</strong> Align your resources toward that endpoint</li>
+<li><strong>Course Correction:</strong> Adjust as needed without losing direction</li>
+</ol>
+</div>
+
+<p>The card invites you to examine: What would it look like to move forward with both confidence <em>and</em> flexibility?</p>
+
+<div class="reflection-box">
+Reflection: The Chariot doesn't promise an easy path. It promises that the path exists—and that you have what you need to walk it.
+</div>`,
+      
+      affirmation: "I trust my direction. I adjust my approach without losing my way."
+    };
+
+    const questionChips = [
+      { id: 'love', text: "How does this apply to relationships?", icon: '🌸' },
+      { id: 'stuck', text: "I'm feeling uncertain...", icon: '🌾' },
+      { id: 'career', text: "What about my career path?", icon: '🌳' }
+    ];
+
+    const responses = {
+      love: {
+        message: "In the context of relationships, The Chariot suggests a moment where clarity about your needs becomes paramount.\n\nThe Control strength here relates to emotional sovereignty—understanding what you want from partnership and being able to communicate it with grace and firmness.\n\nA pattern to watch: The Rigidity shadow manifests when we become so attached to our vision of the relationship that we stop seeing the actual person in front of us. True partnership requires both direction and adaptation.\n\nConsider: What conversation would bring more clarity to your relationship right now? And are you prepared to both speak your truth and hear theirs?",
+        xp: 2
+      },
+      stuck: {
+        message: "Uncertainty is information. Let's work with it rather than against it.\n\nThe Chariot appearing during a period of uncertainty suggests that you may be waiting for perfect clarity before taking action. But here's what I've observed: Clarity often emerges through movement, not before it.\n\nA useful framework:\n\n1. Identify what you DO know (even if it's small)\n2. Take one action based on that knowledge\n3. Observe what that action reveals\n4. Adjust and repeat\n\nThis isn't about forcing a decision. It's about recognizing that sometimes the path becomes visible only when we start walking it. What's one small step you could take today that feels aligned, even if you can't see the full journey?",
+        xp: 3
+      },
+      career: {
+        message: "Career-wise, The Chariot is an invitation to step into a more active role in shaping your professional trajectory.\n\nThe Initiative strength is particularly relevant here. It asks: What would it look like to create opportunities rather than wait for them? To position yourself intentionally rather than hope to be noticed?\n\nA note on the Aggression shadow: In professional contexts, this can manifest as achieving results while damaging relationships. The most sustainable career growth happens when you can build momentum while building bridges.\n\nReflection: Is there a project or position you've been considering but haven't pursued? What's holding you back—is it a genuine obstacle or a story you're telling yourself about what's possible?\n\nThe Chariot suggests the path is clearer than you think. Sometimes we just need permission to claim it.",
+        xp: 2
+      }
+    };
+
+    // Event handlers
+    function nextStage(newStage) {
+      stage = newStage;
+      render();
+    }
+
+    function goBack() {
+      stage = 'interpretation';
+      render();
+    }
+
+    function saveReading() {
+      const reading = {
+        date: new Date().toISOString(),
+        card: drawnCard,
+        avatar: 'destiny',
+        conversation: conversation,
+        xp: relationshipXP
+      };
+      
+      localStorage.setItem('lastReading', JSON.stringify(reading));
+      isSaved = true;
+      render();
+      
+      setTimeout(() => {
+        alert('✓ Reading preserved in your journal.');
+      }, 100);
+    }
+
+    function handleChipClick(chipId) {
+      const chip = questionChips.find(c => c.id === chipId);
+      const response = responses[chipId];
+      
+      conversation.push(
+        { speaker: 'user', text: chip.text },
+        { speaker: 'destiny', text: response.message, xp: response.xp }
+      );
+      relationshipXP += response.xp;
+      
+      nextStage('conversation');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input ? input.value.trim() : '';
+      
+      if (!message) return;
+      
+      conversation.push({ speaker: 'user', text: message });
+      render();
+      
+      setTimeout(() => {
+        conversation.push({
+          speaker: 'destiny',
+          text: "That's an interesting question. Let's explore it together. What specifically draws you to this inquiry?",
+          xp: 1
+        });
+        relationshipXP += 1;
+        render();
+      }, 1000);
+    }
+
+    // Render functions
+    function renderWelcome() {
+      return `
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon">💧</div>
+            <div class="avatar-info">
+              <h2>Destiny</h2>
+              <p>Water Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="message-box">
+              <p>Welcome. I'm Destiny.</p>
+              <p>The cards offer structure in the midst of uncertainty. They don't predict your future—they illuminate patterns, possibilities, and pathways you may not have considered.</p>
+              <p>My approach is grounded and methodical. I'll help you <em>think through</em> what the cards are showing you, rather than simply <em>telling</em> you what they mean.</p>
+              <p>Shall we begin?</p>
+            </div>
+
+            <button class="btn-primary" onclick="nextStage('shuffling')">Draw Your Card</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderShuffling() {
+      setTimeout(() => nextStage('card-reveal'), 2000);
+      return `
+        <div class="shuffling-screen">
+          <div class="shuffling-card"></div>
+          <p class="shuffling-text">Preparing your reading...</p>
+        </div>
+      `;
+    }
+
+    function renderCardReveal() {
+      return `
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon">💧</div>
+            <div class="avatar-info">
+              <h2>Destiny</h2>
+              <p>Water Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="card-display">
+              <div class="card-content">
+                <p class="card-number">VII</p>
+                <p class="card-name">THE CHARIOT</p>
+              </div>
+            </div>
+
+            <div class="card-info">
+              <h3>The Chariot</h3>
+              <div class="keywords">
+                ${drawnCard.keywords.map(k => `<span class="keyword">${k}</span>`).join('')}
+              </div>
+            </div>
+
+            <button class="btn-primary" onclick="nextStage('interpretation')">Explore This Card</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderInterpretation() {
+      return `
+        ${!isFirstTime ? `
+        <button class="save-button ${isSaved ? 'saved' : ''}" onclick="saveReading()">
+          <span class="save-icon">${isSaved ? '✓' : '♡'}</span>
+          <span>${isSaved ? 'Saved' : 'Save Reading'}</span>
+        </button>
+        ` : ''}
+        
+        <div class="container">
+          <div class="header">
+            <div class="avatar-icon">💧</div>
+            <div class="avatar-info">
+              <h2>Destiny</h2>
+              <p>Water Guide • Level 1</p>
+            </div>
+          </div>
+
+          <div class="scrollable">
+            <div class="mini-card">
+              <div class="mini-card-img">VII</div>
+              <div class="mini-card-info">
+                <h3>The Chariot</h3>
+                <p>Card 7 of 22 • Major Arcana</p>
+              </div>
+            </div>
+
+            <div class="interpretation-box">
+              <div class="destiny-message">${destinyContent.dailyDrawIntro}</div>
+            </div>
+
+            <div class="strengths-box">
+              <h4>Strengths to Cultivate</h4>
+              ${drawnCard.strengths.map(s => `
+                <div class="item">
+                  <div class="symbol">${s.symbol}</div>
+                  <div class="item-content">
+                    <p>${s.label}</p>
+                    <p>${s.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+              
+              <h4 style="margin-top: 1.5rem;">Shadows to Notice</h4>
+              ${drawnCard.weaknesses.map(w => `
+                <div class="item">
+                  <div class="symbol">${w.symbol}</div>
+                  <div class="item-content">
+                    <p>${w.label}</p>
+                    <p>${w.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="affirmation-box">
+              <p>${destinyContent.affirmation}</p>
+            </div>
+          </div>
+
+          <div class="chips-section">
+            <p class="chips-label">Explore Further</p>
+            ${questionChips.map(chip => `
+              <button class="chip" onclick="handleChipClick('${chip.id}')">
+                <span class="chip-icon">${chip.icon}</span>
+                <span class="chip-text">${chip.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderConversation() {
+      return `
+        ${!isFirstTime ? `
+        <button class="save-button ${isSaved ? 'saved' : ''}" onclick="saveReading()">
+          <span class="save-icon">${isSaved ? '✓' : '♡'}</span>
+          <span>${isSaved ? 'Saved' : 'Save Reading'}</span>
+        </button>
+        ` : ''}
+        
+        <div class="container">
+          <button class="back-button" onclick="goBack()">
+            <span>←</span>
+            <span>Return to reading</span>
+          </button>
+          
+          <div class="conversation-header">
+            <div class="header" style="margin: 0;">
+              <div class="avatar-icon">💧</div>
+              <div class="avatar-info">
+                <h2>Destiny</h2>
+                <p>Water Guide • Level 1</p>
+              </div>
+            </div>
+            <div class="xp-display">
+              <p>Relationship</p>
+              <p>${relationshipXP} XP</p>
+            </div>
+          </div>
+
+          <div class="conversation-thread">
+            <div class="context-card">
+              <p>Your Card</p>
+              <p>The Chariot</p>
+            </div>
+
+            ${conversation.map(msg => `
+              <div class="message ${msg.speaker}">
+                <div class="message-bubble">
+                  <p class="message-text">${msg.text}</p>
+                  ${msg.xp ? `<p class="xp-badge">+${msg.xp} XP</p>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="chips-section" style="margin-bottom: 1rem;">
+            ${questionChips.filter(chip => !conversation.some(msg => msg.text === chip.text)).map(chip => `
+              <button class="chip" onclick="handleChipClick('${chip.id}')">
+                <span class="chip-icon">${chip.icon}</span>
+                <span class="chip-text">${chip.text}</span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="input-area">
+            <input 
+              type="text" 
+              class="input-field" 
+              placeholder="Share your thoughts..."
+              id="messageInput"
+              onkeypress="if(event.key==='Enter') sendMessage()"
+            />
+            <button class="send-btn" onclick="sendMessage()">
+              →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Main render
+    function render() {
+      const app = document.getElementById('app');
+      
+      switch(stage) {
+        case 'welcome':
+          app.innerHTML = renderWelcome();
+          break;
+        case 'shuffling':
+          app.innerHTML = renderShuffling();
+          break;
+        case 'card-reveal':
+          app.innerHTML = renderCardReveal();
+          break;
+        case 'interpretation':
+          app.innerHTML = renderInterpretation();
+          break;
+        case 'conversation':
+          app.innerHTML = renderConversation();
+          break;
+      }
+    }
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
