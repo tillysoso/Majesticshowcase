@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAJESTIC - Explore your spiritual path</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fade-in 0.3s ease-out; }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <div id="app"></div>
+
+    <script>
+        // ============ BULLETPROOF VANILLA JS - NO REACT ============
+        
+        // Safe haptic feedback
+        function safeHaptic(pattern) {
+            try {
+                if (navigator.vibrate) navigator.vibrate(pattern || 50);
+            } catch (e) { console.warn('Haptic unavailable'); }
+        }
+
+        // Avatar data
+        const AVATARS = {
+            olivia: {
+                name: 'Olivia', element: 'Earth', icon: '🌱', color: 'text-emerald-400',
+                personality: 'I guide with nurturing stability and help you build solid foundations.',
+                song: 'Rooted by Little Simz',
+                adviceType: 'Practical, step-by-step guidance with gentle encouragement',
+                backstory: 'Born from ancient forest wisdom, Olivia learned that true strength comes from deep roots and patient growth.'
+            },
+            elijah: {
+                name: 'Elijah', element: 'Air', icon: '💨', color: 'text-purple-400',
+                personality: 'I offer clarity through balanced perspective and thoughtful analysis.',
+                song: 'Breathe Me by Sia',
+                adviceType: 'Balanced insights that consider multiple perspectives',
+                backstory: 'A former scholar who discovered that true wisdom comes from observing patterns in both chaos and order.'
+            },
+            destiny: {
+                name: 'Destiny', element: 'Water', icon: '🌊', color: 'text-blue-400',
+                personality: 'I help you trust your intuition and flow with life\'s currents.',
+                song: 'Ocean Eyes by Billie Eilish',
+                adviceType: 'Intuitive guidance that honors your emotional truth',
+                backstory: 'Once a lighthouse keeper, Destiny learned to read the tides of human emotion and guide souls safely to shore.'
+            },
+            casper: {
+                name: 'Casper', element: 'Fire', icon: '🔥', color: 'text-red-400',
+                personality: 'I ignite your inner fire and guide you to take empowered action.',
+                song: 'Run the World by Beyoncé',
+                adviceType: 'Direct, action-oriented guidance that sparks transformation',
+                backstory: 'A former warrior who learned that true power comes from channeling passion into purposeful action.'
+            }
+        };
+
+        const QUESTIONS = [
+            {
+                question: "When life feels uncertain, you tend to...",
+                options: [
+                    { text: "Take bold action and trust your instincts", avatar: 'casper', icon: '🔥' },
+                    { text: "Flow with the changes and feel your way through", avatar: 'destiny', icon: '🌊' },
+                    { text: "Ground yourself and plan practical next steps", avatar: 'olivia', icon: '🌱' },
+                    { text: "Step back, breathe, and find balance", avatar: 'elijah', icon: '💨' }
+                ]
+            },
+            {
+                question: "Your ideal guidance feels...",
+                options: [
+                    { text: "Direct and empowering", avatar: 'casper', icon: '🔥' },
+                    { text: "Intuitive and flowing", avatar: 'destiny', icon: '🌊' },
+                    { text: "Practical and nurturing", avatar: 'olivia', icon: '🌱' },
+                    { text: "Balanced and wise", avatar: 'elijah', icon: '💨' }
+                ]
+            }
+        ];
+
+        // App state
+        let state = {
+            currentStep: 0,
+            answers: [],
+            recommendedAvatar: null,
+            currentHero: null,
+            selectedAvatar: null,
+            activeTouchpoint: null,
+            showTransition: false
+        };
+
+        // Calculate recommendation
+        function calculateRecommendation(answers) {
+            const counts = {};
+            answers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+            return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+        }
+
+        // Get touchpoint content
+        function getTouchpointContent(num, avatarKey) {
+            const avatar = AVATARS[avatarKey];
+            const content = {
+                1: { title: "Core Philosophy", content: avatar.personality },
+                2: { title: "Favourite Song", content: avatar.song },
+                3: { title: "Advice Style", content: avatar.adviceType },
+                4: { title: "Origin Story", content: avatar.backstory }
+            };
+            return content[num];
+        }
+
+        // Event handlers - INLINE, NO DELEGATION
+        function handleAnswer(avatarKey) {
+            state.answers.push(avatarKey);
+            safeHaptic([100, 50, 100]);
+            
+            if (state.currentStep < QUESTIONS.length - 1) {
+                state.currentStep++;
+            } else {
+                state.recommendedAvatar = calculateRecommendation(state.answers);
+                state.currentHero = state.recommendedAvatar;
+                state.currentStep++;
+            }
+            render();
+        }
+
+        function handleAvatarSelect(avatarKey) {
+            state.showTransition = true;
+            safeHaptic([100, 50, 100]);
+            render();
+            
+            setTimeout(() => {
+                state.selectedAvatar = avatarKey;
+                state.showTransition = false;
+                render();
+            }, 2000);
+        }
+
+        function handleHeroSwap(avatarKey) {
+            state.currentHero = avatarKey;
+            state.activeTouchpoint = null;
+            safeHaptic([50, 30, 50]);
+            render();
+        }
+
+        function handleTouchpoint(num) {
+            state.activeTouchpoint = state.activeTouchpoint === num ? null : num;
+            safeHaptic(50);
+            render();
+        }
+
+        // Render functions
+        function renderSplash() {
+            return `
+                <div class="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-6">
+                    <div class="text-center">
+                        <button onclick="state.currentStep=1; render();" 
+                            class="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer transition-all duration-500 hover:scale-110 group"
+                            style="background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7); box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);">
+                            <div class="absolute inset-4 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
+                            <span class="text-4xl z-10">👁️</span>
+                        </button>
+                        <h1 class="text-5xl font-light text-white mb-2" style="letter-spacing: 0.3em;">MAJESTIC</h1>
+                        <p class="text-gray-400 text-lg font-light italic mb-8">Explore your spiritual path</p>
+                        <p class="text-gray-500 text-sm">Tap the crystal ball to begin</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQuestion(idx) {
+            const q = QUESTIONS[idx];
+            return `
+                <div class="min-h-screen bg-gray-100 px-6 py-12 flex flex-col items-center justify-center">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-light text-gray-900 mb-6" style="letter-spacing: 0.3em;">MAJESTIC</h1>
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+                            style="background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7); box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);">
+                            <span class="text-2xl">👁️</span>
+                        </div>
+                        <div class="flex justify-center gap-2 mb-8">
+                            ${QUESTIONS.map((_, i) => `
+                                <div class="w-2 h-2 rounded-full ${i <= idx ? 'bg-gray-900' : 'bg-gray-400'}"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="w-full max-w-sm">
+                        <div class="bg-gray-900 rounded-2xl p-6">
+                            <h2 class="text-white text-lg font-light text-center leading-relaxed mb-6">${q.question}</h2>
+                            <div class="space-y-3">
+                                ${q.options.map((opt, i) => `
+                                    <button onclick="handleAnswer('${opt.avatar}')"
+                                        class="w-full bg-gray-800 hover:bg-gray-700 rounded-lg p-3 text-left transition-all duration-200 border border-gray-700 hover:border-gray-600">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-lg">${opt.icon}</span>
+                                            <span class="text-white font-light text-sm">${opt.text}</span>
+                                        </div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRecommendation() {
+            const hero = AVATARS[state.currentHero];
+            const isOriginal = state.currentHero === state.recommendedAvatar;
+            const touchpoint = state.activeTouchpoint ? getTouchpointContent(state.activeTouchpoint, state.currentHero) : null;
+            
+            return `
+                <div class="min-h-screen bg-gray-900 px-6 py-8 flex flex-col">
+                    <div class="flex justify-center mb-6">
+                        ${isOriginal ? `
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
+                                style="background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7);">
+                                <span class="text-2xl">👁️</span>
+                            </div>
+                        ` : `
+                            <div class="w-16 h-16 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                <span class="text-3xl">${hero.icon}</span>
+                            </div>
+                        `}
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl font-light text-white mb-4" style="letter-spacing: 0.2em;">${hero.name.toUpperCase()}</h1>
+                        <p class="text-gray-400 text-lg">${hero.element} Guide</p>
+                    </div>
+                    
+                    <div class="flex-1 relative mb-8">
+                        <div class="relative w-64 h-64 mx-auto mb-6">
+                            <div class="absolute inset-0 rounded-full border-2 border-gray-700 flex items-center justify-center bg-gray-800">
+                                <span class="text-6xl">${hero.icon}</span>
+                            </div>
+                            
+                            ${[1,2,3,4].map(num => `
+                                <button onclick="handleTouchpoint(${num})" 
+                                    class="absolute w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer transition-all duration-300 ${
+                                        state.activeTouchpoint === num 
+                                            ? 'bg-yellow-500 animate-pulse shadow-lg shadow-yellow-500/50 scale-110' 
+                                            : 'bg-blue-500 hover:scale-110 hover:shadow-lg'
+                                    }"
+                                    style="${
+                                        num === 1 ? 'top: 32px; left: 32px;' :
+                                        num === 2 ? 'top: 32px; right: 32px;' :
+                                        num === 3 ? 'bottom: 32px; left: 32px;' :
+                                        'bottom: 32px; right: 32px;'
+                                    }">
+                                    ${num}
+                                </button>
+                            `).join('')}
+                            
+                            ${touchpoint ? `
+                                <div class="absolute top-full mt-4 left-1/2 transform -translate-x-1/2 w-72 bg-gray-800 border border-gray-600 rounded-2xl p-4 shadow-xl animate-in">
+                                    <div class="text-center">
+                                        <h3 class="text-yellow-400 font-semibold mb-2">${touchpoint.title}</h3>
+                                        <p class="text-gray-300 text-sm leading-relaxed">${touchpoint.content}</p>
+                                    </div>
+                                    <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-800 border-l border-t border-gray-600 rotate-45"></div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <p class="text-gray-500 text-sm text-center mb-4">
+                            ${touchpoint ? 'Tap another number to explore more' : 'Tap the numbered points to learn about your guide'}
+                        </p>
+                        
+                        ${!touchpoint ? `
+                            <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                                <p class="text-gray-300 text-center leading-relaxed italic">"${hero.personality}"</p>
+                                ${isOriginal ? `
+                                    <p class="text-center mt-4">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs bg-yellow-400 text-gray-900 font-medium">
+                                            Recommended for you
+                                        </span>
+                                    </p>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="mb-6">
+                        <button onclick="handleAvatarSelect('${state.currentHero}')"
+                            class="w-full bg-white text-gray-900 py-4 rounded-full font-medium text-lg hover:bg-gray-100 transition-colors duration-200">
+                            Choose ${hero.name}
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        ${Object.entries(AVATARS).filter(([k]) => k !== state.currentHero).map(([key, av]) => `
+                            <button onclick="handleHeroSwap('${key}')"
+                                class="w-full bg-gray-800 border border-gray-700 rounded-2xl p-4 hover:border-gray-600 transition-all duration-200 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
+                                    <span class="text-2xl">${av.icon}</span>
+                                </div>
+                                <div class="text-left">
+                                    <h3 class="text-white font-medium">${av.name}</h3>
+                                    <p class="text-gray-400 text-sm">${av.element} Guide</p>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <button onclick="handleAvatarSelect('${state.recommendedAvatar}')"
+                        class="w-full text-gray-500 text-sm mt-4 hover:text-gray-400 transition-colors duration-200">
+                        Skip - Use Quiz Result (${AVATARS[state.recommendedAvatar].name})
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderConfirmation() {
+            const selected = AVATARS[state.selectedAvatar];
+            return `
+                <div class="min-h-screen bg-gray-100 px-6 py-12 flex flex-col justify-center">
+                    <div class="text-center">
+                        <span class="text-8xl mb-6 block">${selected.icon}</span>
+                        <h2 class="text-3xl font-light mb-4 text-gray-900" style="letter-spacing: 0.2em;">WELCOME</h2>
+                        <h3 class="text-xl font-light mb-6 text-gray-700">${selected.element} Seeker</h3>
+                        <div class="bg-gray-900 rounded-2xl p-6 mb-8 max-w-md mx-auto">
+                            <p class="text-gray-300 text-sm leading-relaxed italic">"${selected.personality}"</p>
+                        </div>
+                        <button class="w-full max-w-sm mx-auto bg-gray-900 text-white py-4 rounded-lg font-medium text-lg hover:bg-gray-800 transition-colors duration-200">
+                            Begin Your First Reading
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTransition() {
+            return `
+                <div class="min-h-screen bg-gray-50 flex items-center justify-center">
+                    <div class="w-24 h-24 rounded-full flex items-center justify-center animate-pulse"
+                        style="background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7); box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);">
+                        <span class="text-3xl">👁️</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main render
+        function render() {
+            const app = document.getElementById('app');
+            
+            if (state.showTransition) {
+                app.innerHTML = renderTransition();
+            } else if (state.selectedAvatar) {
+                app.innerHTML = renderConfirmation();
+            } else if (state.currentStep === 0) {
+                app.innerHTML = renderSplash();
+            } else if (state.currentStep >= 1 && state.currentStep <= 2) {
+                app.innerHTML = renderQuestion(state.currentStep - 1);
+            } else if (state.currentStep === 3 && state.currentHero) {
+                app.innerHTML = renderRecommendation();
+            } else {
+                app.innerHTML = '<div class="min-h-screen bg-gray-900 flex items-center justify-center"><p class="text-white">Loading...</p></div>';
+            }
+        }
+
+        // Initialize
+        render();
+    </script>
+</body>
+</html>
