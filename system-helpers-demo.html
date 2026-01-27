@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Majestic - System Helpers Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0C0A09 0%, #1C1917 100%);
+            color: #F9EDD6;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            color: #EAB308;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(234, 179, 8, 0.2);
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #EAB308, #F9EDD6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #A8A29E;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #EAB308;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .avatar-card {
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avatar-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .avatar-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .avatar-element {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .avatar-tagline {
+            font-size: 0.85em;
+            font-style: italic;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .avatar-details {
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+
+        .avatar-details div {
+            margin: 5px 0;
+        }
+
+        .card-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .card-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-name {
+            font-weight: bold;
+            color: #EAB308;
+            margin-bottom: 10px;
+        }
+
+        .card-suit {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .card-keywords {
+            font-size: 0.8em;
+            color: #A8A29E;
+            margin-top: 10px;
+        }
+
+        .calc-input {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .calc-input label {
+            font-weight: 500;
+        }
+
+        .calc-input input {
+            padding: 10px;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #F9EDD6;
+            font-size: 1em;
+        }
+
+        .calc-result {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .calc-result-title {
+            font-weight: bold;
+            color: #EAB308;
+            margin-bottom: 10px;
+        }
+
+        .calc-note {
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        button {
+            background: linear-gradient(135deg, #EAB308, #CA8A04);
+            color: #0C0A09;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .position-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .position-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #EAB308;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .position-name {
+            font-weight: bold;
+            color: #EAB308;
+            margin-bottom: 5px;
+        }
+
+        .position-meaning {
+            color: #A8A29E;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .calc-input {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .calc-input input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>✨ System Helpers Showcase ✨</h1>
+            <p class="subtitle">Interactive demonstration of avatar themes, card data, and calculation helpers</p>
+        </div>
+
+        <!-- AVATAR THEMES -->
+        <div class="section">
+            <h2 class="section-title">1. Avatar Theme System</h2>
+            <p>Four elemental guides with complete personality and visual identities</p>
+            <div class="avatar-grid" id="avatarGrid"></div>
+        </div>
+
+        <!-- CARD DATA -->
+        <div class="section">
+            <h2 class="section-title">2. Card Database (5 Test Cards)</h2>
+            <div class="card-display" id="cardDisplay"></div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="drawRandomCards()">🔀 Draw 3 Random Cards</button>
+            </div>
+            <div id="randomCardsOutput"></div>
+        </div>
+
+        <!-- BIRTH CARD CALCULATOR -->
+        <div class="section">
+            <h2 class="section-title">3. Birth Card Calculator</h2>
+            <p>Calculate your birth card using tarot numerology</p>
+            <div class="calc-input">
+                <label for="birthDate">Birth Date:</label>
+                <input type="date" id="birthDate" value="1990-03-15">
+                <button onclick="calculateBirthCard()">Calculate</button>
+            </div>
+            <div id="birthCardResult"></div>
+        </div>
+
+        <!-- DAILY CARD CALCULATOR -->
+        <div class="section">
+            <h2 class="section-title">4. Daily Card Calculator</h2>
+            <p>Based on your birth card, calculate today's guidance card</p>
+            <div class="calc-input">
+                <label for="dailyDate">Date:</label>
+                <input type="date" id="dailyDate">
+                <button onclick="calculateDailyCard()">Calculate Daily Card</button>
+            </div>
+            <div id="dailyCardResult"></div>
+        </div>
+
+        <!-- SPREAD POSITIONS -->
+        <div class="section">
+            <h2 class="section-title">5. Spread Position Meanings</h2>
+            <div style="margin-bottom: 20px;">
+                <button onclick="showSpreadPositions('daily')">Daily Draw</button>
+                <button onclick="showSpreadPositions('threespread')" style="margin-left: 10px;">Three-Card Spread</button>
+            </div>
+            <div class="position-list" id="positionsList"></div>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date
+        document.getElementById('dailyDate').valueAsDate = new Date();
+
+        // Avatar Data
+        const AVATAR_DATA = {
+            olivia: {
+                name: 'Olivia',
+                element: 'Earth',
+                suit: 'Pentacles',
+                theme: {
+                    colors: { primary: '#7ED321', secondary: '#689F38', accent: '#AED581', light: '#F1F8E9', dark: '#33691E', glow: 'rgba(126, 211, 33, 0.6)' },
+                    backgrounds: ['forest groves', 'mountain meadows', 'garden sanctuaries'],
+                    sacredObjects: ['crystals', 'plants', 'wooden totems'],
+                    icon: '🌱'
+                },
+                personality: {
+                    tagline: 'I guide with nurturing stability and help you build solid foundations',
+                    archetype: 'The Nurturing Builder',
+                    backstory: 'Born from ancient forest wisdom, Olivia learned that true strength comes from deep roots and patient growth',
+                    themeSong: 'Rooted by Little Simz'
+                }
+            },
+            elijah: {
+                name: 'Elijah',
+                element: 'Air',
+                suit: 'Swords',
+                theme: {
+                    colors: { primary: '#9E9E9E', secondary: '#757575', accent: '#BDBDBD', light: '#F5F5F5', dark: '#424242', glow: 'rgba(158, 158, 158, 0.6)' },
+                    backgrounds: ['sky temples', 'cloud libraries', 'crystal caves'],
+                    sacredObjects: ['feathers', 'incense', 'wind chimes'],
+                    icon: '💨'
+                },
+                personality: {
+                    tagline: 'I offer clarity through balanced perspective and thoughtful analysis',
+                    archetype: 'The Balanced Philosopher',
+                    backstory: 'A former scholar who discovered that true wisdom comes from observing patterns in both chaos and order',
+                    themeSong: 'Breathe Me by Sia'
+                }
+            },
+            destiny: {
+                name: 'Destiny',
+                element: 'Water',
+                suit: 'Cups',
+                theme: {
+                    colors: { primary: '#4A90E2', secondary: '#357ABD', accent: '#7B68EE', light: '#E3F2FD', dark: '#1565C0', glow: 'rgba(74, 144, 226, 0.6)' },
+                    backgrounds: ['ocean depths', 'moonlit lakes', 'flowing rivers'],
+                    sacredObjects: ['seashells', 'moon phases', 'crystal water vessels'],
+                    icon: '🌊'
+                },
+                personality: {
+                    tagline: 'I help you trust your intuition and flow with life\'s currents',
+                    archetype: 'The Intuitive Empath',
+                    backstory: 'Once a lighthouse keeper, Destiny learned to read the tides of human emotion and guide souls safely to shore',
+                    themeSong: 'Ocean Eyes by Billie Eilish'
+                }
+            },
+            casper: {
+                name: 'Casper',
+                element: 'Fire',
+                suit: 'Wands',
+                theme: {
+                    colors: { primary: '#E53E3E', secondary: '#C53030', accent: '#FC8181', light: '#FFF5F5', dark: '#9B2C2C', glow: 'rgba(229, 62, 62, 0.6)' },
+                    backgrounds: ['fire temples', 'sunset peaks', 'forge spaces'],
+                    sacredObjects: ['candles', 'swords', 'transformation symbols'],
+                    icon: '🔥'
+                },
+                personality: {
+                    tagline: 'I ignite your inner fire and guide you to take empowered action',
+                    archetype: 'The Passionate Catalyst',
+                    backstory: 'A former warrior who learned that true power comes from channeling passion into purposeful action',
+                    themeSong: 'Run the World by Beyoncé'
+                }
+            }
+        };
+
+        // Card Data
+        const TAROT_CARDS = {
+            'fool': { id: 'fool', name: 'The Fool', number: 0, suit: 'major', element: 'spirit', keywords: ['new beginnings', 'innocence', 'spontaneity', 'free spirit', 'leap of faith'] },
+            'ace-of-cups': { id: 'ace-of-cups', name: 'Ace of Cups', number: 1, suit: 'cups', element: 'water', keywords: ['love', 'new feelings', 'emotional awakening', 'creativity', 'spirituality'] },
+            'seven-of-wands': { id: 'seven-of-wands', name: 'Seven of Wands', number: 7, suit: 'wands', element: 'fire', keywords: ['challenge', 'competition', 'perseverance', 'defending position', 'standing ground'] },
+            'six-of-pentacles': { id: 'six-of-pentacles', name: 'Six of Pentacles', number: 6, suit: 'pentacles', element: 'earth', keywords: ['generosity', 'charity', 'sharing wealth', 'fairness', 'giving and receiving'] },
+            'ten-of-swords': { id: 'ten-of-swords', name: 'Ten of Swords', number: 10, suit: 'swords', element: 'air', keywords: ['painful ending', 'deep wounds', 'betrayal', 'rock bottom', 'inevitable end'] }
+        };
+
+        const SPREAD_POSITIONS = {
+            daily: [{ position: 0, name: "Today's Guidance", meaning: "The energy and guidance illuminating your path forward today" }],
+            threespread: [
+                { position: 0, name: 'Past', meaning: 'Foundations, lessons, and influences that brought you here' },
+                { position: 1, name: 'Present', meaning: 'Current energy, situation, and what demands your attention now' },
+                { position: 2, name: 'Future', meaning: 'Potential outcome and the path unfolding before you' }
+            ]
+        };
+
+        // Render Avatars
+        function renderAvatars() {
+            const grid = document.getElementById('avatarGrid');
+            Object.keys(AVATAR_DATA).forEach(key => {
+                const avatar = AVATAR_DATA[key];
+                const card = document.createElement('div');
+                card.className = 'avatar-card';
+                card.style.borderColor = avatar.theme.colors.primary;
+                card.style.background = `linear-gradient(135deg, ${avatar.theme.colors.dark}20, ${avatar.theme.colors.primary}10)`;
+                
+                card.innerHTML = `
+                    <div class="avatar-name" style="color: ${avatar.theme.colors.primary}">
+                        ${avatar.theme.icon} ${avatar.name}
+                    </div>
+                    <div class="avatar-element">${avatar.element} • ${avatar.suit}</div>
+                    <div class="avatar-tagline">${avatar.personality.tagline}</div>
+                    <div class="avatar-details">
+                        <div><strong>Archetype:</strong> ${avatar.personality.archetype}</div>
+                        <div><strong>Theme Song:</strong> ${avatar.personality.themeSong}</div>
+                        <div><strong>Backstory:</strong> ${avatar.personality.backstory}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Cards
+        function renderCards() {
+            const display = document.getElementById('cardDisplay');
+            Object.values(TAROT_CARDS).forEach(card => {
+                const item = document.createElement('div');
+                item.className = 'card-item';
+                item.innerHTML = `
+                    <div class="card-name">${card.name}</div>
+                    <div class="card-suit">${card.suit} • ${card.element}</div>
+                    <div class="card-keywords">${card.keywords.slice(0, 3).join(', ')}</div>
+                `;
+                display.appendChild(item);
+            });
+        }
+
+        // Random Cards
+        window.drawRandomCards = function() {
+            const cardIds = Object.keys(TAROT_CARDS);
+            const shuffled = [...cardIds].sort(() => Math.random() - 0.5);
+            const selected = shuffled.slice(0, 3).map(id => TAROT_CARDS[id]);
+            
+            const output = document.getElementById('randomCardsOutput');
+            output.innerHTML = `
+                <div class="calc-result">
+                    <div class="calc-result-title">Random Draw Results:</div>
+                    ${selected.map((card, i) => `
+                        <div style="margin: 10px 0;">
+                            <strong>Card ${i + 1}:</strong> ${card.name} (${card.suit})
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        };
+
+        // Birth Card Calculation
+        window.calculateBirthCard = function() {
+            const input = document.getElementById('birthDate').value;
+            const date = new Date(input);
+            
+            const sumDigits = (num) => num.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            let total = sumDigits(year) + sumDigits(month) + sumDigits(day);
+            while (total > 22) {
+                total = sumDigits(total);
+            }
+            const birthCardNumber = total === 22 ? 0 : total;
+            
+            const isImplemented = birthCardNumber === 0;
+            
+            const result = document.getElementById('birthCardResult');
+            result.innerHTML = `
+                <div class="calc-result">
+                    <div class="calc-result-title">Birth Card Calculation:</div>
+                    <div>Date: ${date.toDateString()}</div>
+                    <div><strong>Birth Card Number: ${birthCardNumber}</strong></div>
+                    ${isImplemented ? 
+                        `<div style="margin-top: 10px;">✅ Card Available: The Fool</div>` :
+                        `<div class="calc-note">
+                            ⚠️ Your birth card is Major Arcana #${birthCardNumber}, but this card is not yet available in the showcase. 
+                            The calculation logic is working correctly!
+                        </div>`
+                    }
+                </div>
+            `;
+        };
+
+        // Daily Card Calculation
+        window.calculateDailyCard = function() {
+            const birthInput = document.getElementById('birthDate').value;
+            const dailyInput = document.getElementById('dailyDate').value;
+            const birthDate = new Date(birthInput);
+            const dailyDate = new Date(dailyInput);
+            
+            const sumDigits = (num) => num.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            
+            const year = birthDate.getFullYear();
+            const month = birthDate.getMonth() + 1;
+            const day = birthDate.getDate();
+            
+            let birthTotal = sumDigits(year) + sumDigits(month) + sumDigits(day);
+            while (birthTotal > 22) {
+                birthTotal = sumDigits(birthTotal);
+            }
+            const birthCardNumber = birthTotal === 22 ? 0 : birthTotal;
+            
+            const startOfYear = new Date(dailyDate.getFullYear(), 0, 1);
+            const dayOfYear = Math.floor((dailyDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+            const dailyCardNumber = (birthCardNumber + dayOfYear) % 22;
+            
+            const isImplemented = dailyCardNumber === 0;
+            
+            const result = document.getElementById('dailyCardResult');
+            result.innerHTML = `
+                <div class="calc-result">
+                    <div class="calc-result-title">Daily Card Calculation:</div>
+                    <div>Birth Card: #${birthCardNumber}</div>
+                    <div>Day of Year: ${dayOfYear}</div>
+                    <div>Formula: (${birthCardNumber} + ${dayOfYear}) % 22 = ${dailyCardNumber}</div>
+                    <div><strong>Daily Card Number: ${dailyCardNumber}</strong></div>
+                    ${isImplemented ? 
+                        `<div style="margin-top: 10px;">✅ Card Available: The Fool</div>` :
+                        `<div class="calc-note">
+                            ⚠️ Your daily card is Major Arcana #${dailyCardNumber}, but this card is not yet available in the showcase. 
+                            The calculation logic is working correctly!
+                        </div>`
+                    }
+                </div>
+            `;
+        };
+
+        // Spread Positions
+        window.showSpreadPositions = function(type) {
+            const list = document.getElementById('positionsList');
+            const positions = SPREAD_POSITIONS[type];
+            
+            list.innerHTML = positions.map(pos => `
+                <div class="position-item">
+                    <div class="position-name">${pos.name}</div>
+                    <div class="position-meaning">${pos.meaning}</div>
+                </div>
+            `).join('');
+        };
+
+        // Initialize
+        renderAvatars();
+        renderCards();
+        showSpreadPositions('daily');
+    </script>
+</body>
+</html>
