@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majestic - Choose Your Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      min-height: 100vh;
+      color: white;
+      padding: 2rem;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .home-btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      color: #e2e8f0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 1.125rem;
+    }
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .avatar-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 2px solid #334155;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      backdrop-filter: blur(10px);
+    }
+
+    .avatar-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .avatar-card.olivia {
+      border-color: rgba(107, 142, 35, 0.3);
+    }
+
+    .avatar-card.olivia:hover {
+      border-color: #6b8e23;
+      box-shadow: 0 20px 40px rgba(107, 142, 35, 0.3);
+    }
+
+    .avatar-card.elijah {
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+
+    .avatar-card.elijah:hover {
+      border-color: #a855f7;
+      box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+    }
+
+    .avatar-card.casper {
+      border-color: rgba(255, 107, 53, 0.3);
+    }
+
+    .avatar-card.casper:hover {
+      border-color: #ff6b35;
+      box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+    }
+
+    .avatar-card.destiny {
+      border-color: rgba(13, 148, 136, 0.3);
+    }
+
+    .avatar-card.destiny:hover {
+      border-color: #0d9488;
+      box-shadow: 0 20px 40px rgba(13, 148, 136, 0.3);
+    }
+
+    .avatar-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .avatar-name {
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .olivia .avatar-name { color: #a8b896; }
+    .elijah .avatar-name { color: #c084fc; }
+    .casper .avatar-name { color: #ffa366; }
+    .destiny .avatar-name { color: #5eead4; }
+
+    .avatar-element {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .avatar-description {
+      color: #cbd5e1;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem;
+      }
+
+      .avatar-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .avatar-icon {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="home-btn">
+    <span>â†</span>
+    <span>Home</span>
+  </a>
+
+  <div class="container">
+    <div class="header">
+      <h1 class="title">CHOOSE YOUR GUIDE</h1>
+      <p class="subtitle">Experience The Chariot through four unique voices</p>
+    </div>
+
+    <div class="avatar-grid">
+      <!-- Olivia -->
+      <a href="olivia-first-reading.html" class="avatar-card olivia">
+        <span class="avatar-icon">ðŸŒ¿</span>
+        <h3 class="avatar-name">Olivia</h3>
+        <p class="avatar-element">Earth â€¢ Grounded Support</p>
+        <p class="avatar-description">
+          Warm, emotionally attuned girls-girl energy. Olivia keeps you grounded while helping you trust yourself.
+        </p>
+      </a>
+
+      <!-- Elijah -->
+      <a href="elijah-first-reading.html" class="avatar-card elijah">
+        <span class="avatar-icon">ðŸ’¨</span>
+        <h3 class="avatar-name">Elijah</h3>
+        <p class="avatar-element">Air â€¢ Creative Chaos</p>
+        <p class="avatar-description">
+          Non-linear, riddled with insight. Elijah helps you see patterns you've been missing.
+        </p>
+      </a>
+
+      <!-- Casper -->
+      <a href="casper-first-reading.html" class="avatar-card casper">
+        <span class="avatar-icon">ðŸ”¥</span>
+        <h3 class="avatar-name">Casper</h3>
+        <p class="avatar-element">Fire â€¢ Direct Coach</p>
+        <p class="avatar-description">
+          No-nonsense, action-oriented guidance. Casper cuts through the noise and tells you what to do.
+        </p>
+      </a>
+
+      <!-- Destiny -->
+      <a href="destiny-first-reading.html" class="avatar-card destiny">
+        <span class="avatar-icon">ðŸ’§</span>
+        <h3 class="avatar-name">Destiny</h3>
+        <p class="avatar-element">Water â€¢ Intuitive Wisdom</p>
+        <p class="avatar-description">
+          Intense, emotionally intuitive, and deeply perceptive. Destiny helps you navigate emotional depths with clarity.
+        </p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
