@@ -15,10 +15,33 @@
            READING ENGINE BASE STYLES
            ========================================== */
         body {
-            padding: 20px;
+            padding: 0;
+            margin: 0;
             background: #0a0a0a;
             color: #e0e0e0;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* When avatar view is active, body takes avatar background */
+        body.avatar-active-olivia {
+            background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+        }
+        
+        body.avatar-active-elijah {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        body.avatar-active-destiny {
+            background: linear-gradient(to bottom, #1a2e2e 0%, #2d4a4a 50%, #3e5555 100%);
+        }
+        
+        body.avatar-active-casper {
+            background: linear-gradient(135deg, #1a0e0a 0%, #2d1810 50%, #4a2618 100%);
+        }
+        
+        .container {
+            padding: 20px;
         }
 
         .card-animation-container {
@@ -55,6 +78,7 @@
             display: none;
             padding: 40px 20px;
             min-height: 100vh;
+            background: none; /* Body handles background */
         }
 
         .avatar-reading.active {
@@ -69,7 +93,7 @@
    OLIVIA (EARTH 🌿)
    ============================================ */
 .avatar-reading.olivia {
-  background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+  /* Background handled by body.avatar-active-olivia */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
   color: #2e7d32;
 }
@@ -126,7 +150,7 @@
    ELIJAH (AIR 💨)
    ============================================ */
 .avatar-reading.elijah {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  /* Background handled by body.avatar-active-elijah */
   font-family: 'Courier New', monospace;
   color: #e0e0e0;
 }
@@ -206,7 +230,7 @@
    DESTINY (WATER 🌊)
    ============================================ */
 .avatar-reading.destiny {
-  background: linear-gradient(to bottom, #1a2e2e 0%, #2d4a4a 50%, #3e5555 100%);
+  /* Background handled by body.avatar-active-destiny */
   font-family: 'Georgia', 'Times New Roman', serif;
   color: #b2dfdb;
 }
@@ -274,7 +298,7 @@
    CASPER (FIRE 🔥)
    ============================================ */
 .avatar-reading.casper {
-  background: linear-gradient(135deg, #1a0e0a 0%, #2d1810 50%, #4a2618 100%);
+  /* Background handled by body.avatar-active-casper */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #fdba74;
 }
@@ -913,7 +937,9 @@
             var avatarReading = document.getElementById('avatarReading');
             var content = document.getElementById('avatarReadingContent');
             
+            // Apply avatar class to both container and body
             avatarReading.className = 'avatar-reading ' + avatar + ' active';
+            document.body.className = 'avatar-active-' + avatar;
             
             // Build content
             var html = renderAvatarHeader(avatarConfig);
@@ -970,12 +996,14 @@
         function backToBaseView() {
             document.getElementById('avatarReading').classList.remove('active');
             document.getElementById('baseReading').classList.add('active');
+            document.body.className = ''; // Clear avatar body styling
         }
 
         function resetToSelectionView() {
             document.getElementById('baseReading').classList.remove('active');
             document.getElementById('avatarReading').classList.remove('active');
             document.getElementById('readingTypes').style.display = 'grid';
+            document.body.className = ''; // Clear avatar body styling
             
             var avatarCards = document.querySelectorAll('.avatar-card');
             for (var i = 0; i < avatarCards.length; i++) {
