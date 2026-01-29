@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majestic - Card Reading Engine</title>
+    
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    
+    <style>
+        /* Page-specific styles */
+        body {
+            padding: 20px;
+        }
+
+        .card-animation-container {
+            display: none;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .card-animation-container.active {
+            display: block;
+        }
+
+        .card-deck {
+            position: relative;
+            height: 400px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+
+        .card-deck .tarot-card {
+            position: absolute;
+        }
+
+        .base-reading {
+            display: none;
+            padding: 40px 20px;
+        }
+
+        .base-reading.active {
+            display: block;
+        }
+
+        .avatar-reading {
+            display: none;
+            padding: 40px 20px;
+        }
+
+        .avatar-reading.active {
+            display: block;
+        }
+
+        /* Avatar-specific backgrounds */
+        .avatar-reading.olivia {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(46, 125, 50, 0.1) 100%);
+        }
+
+        .avatar-reading.elijah {
+            background: linear-gradient(135deg, rgba(158, 158, 158, 0.1) 0%, rgba(117, 117, 117, 0.1) 100%);
+        }
+
+        .avatar-reading.destiny {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(13, 71, 161, 0.1) 100%);
+        }
+
+        .avatar-reading.casper {
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.1) 0%, rgba(191, 54, 12, 0.1) 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Avatar Grid -->
+        <div class="avatar-grid" id="avatarGrid"></div>
+
+        <!-- Reading Type Selection -->
+        <div class="reading-types" id="readingTypes"></div>
+
+        <!-- Card Animation Container -->
+        <div class="card-animation-container" id="cardAnimation">
+            <div class="card-deck" id="cardDeck"></div>
+        </div>
+
+        <!-- Base Reading Display -->
+        <div class="base-reading" id="baseReading">
+            <button class="btn back-btn" onclick="resetToSelectionView()">← Back to Reading Types</button>
+            <div id="baseReadingContent"></div>
+        </div>
+
+        <!-- Avatar Reading View -->
+        <div class="avatar-reading" id="avatarReading">
+            <button class="btn back-btn" onclick="backToBaseView()">← Back to Base Reading</button>
+            <div id="avatarReadingContent"></div>
+        </div>
+    </div>
+
+    <!-- Shared Scripts -->
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/state.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/api.js"></script>
+
+    <!-- Page Logic -->
+    <script>
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+
+        function init() {
+            renderAvatarGrid();
+            renderReadingTypes();
+        }
+
+        function renderAvatarGrid() {
+            var grid = document.getElementById('avatarGrid');
+            var avatars = ['olivia', 'elijah', 'destiny', 'casper'];
+            
+            avatars.forEach(function(key) {
+                var avatar = AVATAR_CONFIGS[key];
+                grid.innerHTML += renderAvatarCard(key, avatar, true);
+            });
+        }
+
+        function renderReadingTypes() {
+            var container = document.getElementById('readingTypes');
+            var types = [
+                { key: 'daily', icon: '📅', title: 'Daily Card', subtitle: 'Today\'s guidance' },
+                { key: 'birth', icon: '🪐', title: 'Birth Card', subtitle: 'Your soul\'s blueprint' },
+                { key: 'threeCard', icon: '🔮', title: 'Three-Card Reading', subtitle: 'Past · Present · Future' },
+                { key: 'jumping', icon: '✨', title: 'Jumping Card Spread', subtitle: 'Three cards + special guidance' }
+            ];
+            
+            types.forEach(function(type) {
+                container.innerHTML += renderReadingTypeCard(type);
+            });
+        }
+
+        // ========================================
+        // READING FLOW
+        // ========================================
+
+        function selectReading(readingType) {
+            setReading(readingType);
+            
+            document.getElementById('readingTypes').style.display = 'none';
+            
+            var animationContainer = document.getElementById('cardAnimation');
+            animationContainer.classList.add('active');
+            
+            animateCards(readingType);
+            
+            setTimeout(function() {
+                animationContainer.classList.remove('active');
+                showBaseReading(readingType);
+            }, 3000);
+        }
+
+        function animateCards(readingType) {
+            var deck = document.getElementById('cardDeck');
+            deck.innerHTML = '';
+            
+            var data = CARDS[readingType];
+            
+            if (readingType === 'daily' || readingType === 'birth') {
+                var card = document.createElement('div');
+                card.className = 'tarot-card dealt';
+                card.textContent = data.card.emoji;
+                card.style.left = '50%';
+                card.style.top = '50%';
+                card.style.transform = 'translateX(-50%) translateY(-50%)';
+                deck.appendChild(card);
+            } else {
+                var positions = [
+                    { left: '15%', top: '50%' },
+                    { left: '50%', top: '50%' },
+                    { left: '85%', top: '50%' }
+                ];
+                
+                data.cards.forEach(function(cardData, index) {
+                    setTimeout(function() {
+                        var card = document.createElement('div');
+                        card.className = 'tarot-card dealt';
+                        card.textContent = cardData.emoji;
+                        card.style.left = positions[index].left;
+                        card.style.top = positions[index].top;
+                        card.style.transform = 'translateX(-50%) translateY(-50%)';
+                        deck.appendChild(card);
+                    }, index * 400);
+                });
+                
+                if (readingType === 'jumping') {
+                    setTimeout(function() {
+                        var jumpCard = document.createElement('div');
+                        jumpCard.className = 'tarot-card jumping';
+                        jumpCard.textContent = data.jumpingCard.emoji;
+                        jumpCard.style.left = '50%';
+                        jumpCard.style.top = '80%';
+                        jumpCard.style.transform = 'translateX(-50%)';
+                        deck.appendChild(jumpCard);
+                    }, 1600);
+                }
+            }
+        }
+
+        function showBaseReading(readingType) {
+            var data = CARDS[readingType];
+            var baseReading = document.getElementById('baseReading');
+            var content = document.getElementById('baseReadingContent');
+            
+            baseReading.classList.add('active');
+            content.innerHTML = '';
+            
+            // Enable avatar selection
+            var avatarCards = document.querySelectorAll('.avatar-card');
+            for (var i = 0; i < avatarCards.length; i++) {
+                avatarCards[i].classList.remove('disabled');
+            }
+            
+            // Display cards
+            var cardsHTML = '<div class="cards-display">';
+            if (readingType === 'daily') {
+                cardsHTML += renderCard(data.card.emoji, data.card.name);
+            } else if (readingType === 'birth') {
+                cardsHTML += renderCard(data.card.emoji, data.card.name + '<br>Birth Date: ' + data.birthdate);
+            } else {
+                data.cards.forEach(function(card) {
+                    cardsHTML += renderCard(card.emoji, card.name, card.position);
+                });
+            }
+            cardsHTML += '</div>';
+            
+            content.innerHTML = cardsHTML + renderInterpretation('Base Interpretation', data.base.text, data.base.points);
+            
+            // Jumping card section
+            if (readingType === 'jumping') {
+                content.innerHTML += renderJumpingCardContainer(
+                    data.jumpingCard,
+                    data.base.jumpingGuidance,
+                    data.base.jumpingPoints
+                );
+            }
+        }
+
+        function handleAvatarClick(avatar) {
+            var clickedCard = event.currentTarget;
+            if (!clickedCard.classList.contains('disabled')) {
+                selectAvatar(avatar, clickedCard);
+            }
+        }
+
+        function selectAvatar(avatar, clickedCard) {
+            setAvatar(avatar);
+            
+            // Update avatar selection UI
+            var avatarCards = document.querySelectorAll('.avatar-card');
+            for (var i = 0; i < avatarCards.length; i++) {
+                avatarCards[i].classList.remove('selected');
+            }
+            clickedCard.classList.add('selected');
+            
+            // Show avatar reading
+            document.getElementById('baseReading').classList.remove('active');
+            showAvatarReading(avatar);
+        }
+
+        function showAvatarReading(avatar) {
+            var state = getState();
+            var avatarConfig = AVATAR_CONFIGS[avatar];
+            var cardData = CARDS[state.currentReading];
+            var reading = getAvatarReading(state.currentReading, avatar);
+            
+            var avatarReading = document.getElementById('avatarReading');
+            var content = document.getElementById('avatarReadingContent');
+            
+            avatarReading.className = 'avatar-reading ' + avatar + ' active';
+            
+            // Build content
+            var html = renderAvatarHeader(avatarConfig);
+            
+            // Display cards
+            html += '<div class="cards-display">';
+            if (state.currentReading === 'daily') {
+                html += renderCard(cardData.card.emoji, cardData.card.name);
+            } else if (state.currentReading === 'birth') {
+                html += renderCard(cardData.card.emoji, cardData.card.name + '<br>Birth Date: ' + cardData.birthdate);
+            } else {
+                cardData.cards.forEach(function(card) {
+                    html += renderCard(card.emoji, card.name, card.position);
+                });
+            }
+            html += '</div>';
+            
+            // Avatar interpretation
+            html += renderInterpretation(reading.title, reading.text, reading.points);
+            
+            // Music note
+            html += renderMusicNote(reading.music);
+            
+            // Jumping card special message
+            if (state.currentReading === 'jumping') {
+                html += '<div class="jumping-card-container">';
+                html += '<h3 class="jumping-card-label">⚡ Special Message ⚡</h3>';
+                html += '<div class="interpretation-section">';
+                html += '<p class="interpretation-text">' + reading.jumpingText + '</p>';
+                html += '</div></div>';
+            }
+            
+            content.innerHTML = html;
+        }
+
+        function backToBaseView() {
+            document.getElementById('avatarReading').classList.remove('active');
+            document.getElementById('baseReading').classList.add('active');
+        }
+
+        function resetToSelectionView() {
+            document.getElementById('baseReading').classList.remove('active');
+            document.getElementById('avatarReading').classList.remove('active');
+            document.getElementById('readingTypes').style.display = 'grid';
+            
+            var avatarCards = document.querySelectorAll('.avatar-card');
+            for (var i = 0; i < avatarCards.length; i++) {
+                avatarCards[i].classList.add('disabled');
+                avatarCards[i].classList.remove('selected');
+            }
+            
+            resetToSelection();
+        }
+
+        // ========================================
+        // START APP
+        // ========================================
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
