@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majestic - System Utilities Demo</title>
+    
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .demo-title {
+            font-size: 24px;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .demo-output {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #a0d911;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-md) 0;
+            flex-wrap: wrap;
+        }
+        
+        .demo-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        
+        .demo-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .card-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .card-emoji {
+            font-size: 48px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .card-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .card-suit {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn back-btn" onclick="window.location.href='../index.html'">← Back to Home</button>
+        
+        <h1 style="text-align: center; margin-bottom: 60px;">🔮 System Utilities Demo</h1>
+        
+        <!-- Card Data Utilities -->
+        <div class="demo-section">
+            <h2 class="demo-title">1. Card Data Utilities</h2>
+            
+            <div class="demo-controls">
+                <button class="btn" onclick="testGetAllCards()">Show All Cards</button>
+                <button class="btn" onclick="testRandomCard()">Draw Random Card</button>
+                <button class="btn" onclick="testRandomCards()">Draw 3 Cards</button>
+                <button class="btn" onclick="testCardsBySuit()">Filter by Suit</button>
+            </div>
+            
+            <div id="cardDataOutput" class="demo-output">Click a button to test card data functions...</div>
+        </div>
+        
+        <!-- Birth Card Calculations -->
+        <div class="demo-section">
+            <h2 class="demo-title">2. Birth Card Calculator</h2>
+            
+            <div class="demo-controls">
+                <input 
+                    type="date" 
+                    id="birthDateInput" 
+                    class="demo-input" 
+                    value="1990-03-15"
+                    max="2010-01-01"
+                />
+                <button class="btn btn-primary" onclick="calculateBirthCardDemo()">Calculate Birth Card</button>
+            </div>
+            
+            <div id="birthCardOutput" class="demo-output">Enter a birth date and click Calculate...</div>
+        </div>
+        
+        <!-- Daily Card Calculations -->
+        <div class="demo-section">
+            <h2 class="demo-title">3. Daily Card Calculator</h2>
+            
+            <div class="demo-controls">
+                <input 
+                    type="date" 
+                    id="dailyDateInput" 
+                    class="demo-input"
+                />
+                <button class="btn btn-primary" onclick="calculateDailyCardDemo()">Calculate Daily Card</button>
+            </div>
+            
+            <div id="dailyCardOutput" class="demo-output">Requires birth date from section above...</div>
+        </div>
+        
+        <!-- Generic Reading Generation -->
+        <div class="demo-section">
+            <h2 class="demo-title">4. Generic Reading Generator</h2>
+            
+            <div class="demo-controls">
+                <select id="spreadTypeSelect" class="demo-input">
+                    <option value="daily">Daily Reading</option>
+                    <option value="threeCard">Three-Card Spread</option>
+                    <option value="birthCard">Birth Card Reading</option>
+                </select>
+                <input 
+                    type="text" 
+                    id="questionInput" 
+                    class="demo-input" 
+                    placeholder="Optional question..."
+                    style="flex: 1; min-width: 300px;"
+                />
+                <button class="btn btn-primary" onclick="generateReadingDemo()">Generate Reading</button>
+            </div>
+            
+            <div id="readingOutput" class="demo-output">Select spread type and click Generate...</div>
+        </div>
+        
+        <!-- Avatar Theme Display -->
+        <div class="demo-section">
+            <h2 class="demo-title">5. Avatar Theme System</h2>
+            
+            <div class="avatar-grid">
+                <div class="avatar-card" onclick="showAvatarTheme('olivia')">
+                    <div class="avatar-icon">🌱</div>
+                    <div class="avatar-name">Olivia</div>
+                    <div class="avatar-element">Earth</div>
+                </div>
+                
+                <div class="avatar-card" onclick="showAvatarTheme('elijah')">
+                    <div class="avatar-icon">🌬️</div>
+                    <div class="avatar-name">Elijah</div>
+                    <div class="avatar-element">Air</div>
+                </div>
+                
+                <div class="avatar-card" onclick="showAvatarTheme('destiny')">
+                    <div class="avatar-icon">🌊</div>
+                    <div class="avatar-name">Destiny</div>
+                    <div class="avatar-element">Water</div>
+                </div>
+                
+                <div class="avatar-card" onclick="showAvatarTheme('casper')">
+                    <div class="avatar-icon">🔥</div>
+                    <div class="avatar-name">Casper</div>
+                    <div class="avatar-element">Fire</div>
+                </div>
+            </div>
+            
+            <div id="avatarThemeOutput" class="demo-output">Click an avatar to see their complete theme data...</div>
+        </div>
+    </div>
+    
+    <!-- Load all utilities -->
+    <script src="../assets/js/utilities/cardData.js"></script>
+    <script src="../assets/js/utilities/spreadCalculations.js"></script>
+    <script src="../assets/js/services/readingService.js"></script>
+    <script src="../assets/js/config.js"></script>
+    
+    <script>
+        // Set today's date as default for daily calculator
+        document.getElementById('dailyDateInput').valueAsDate = new Date();
+        
+        var currentBirthDate = null;
+        
+        // Card Data Tests
+        function testGetAllCards() {
+            var output = '=== ALL CARDS IN DECK ===\n\n';
+            var cardIds = getAllCardIds();
+            output += 'Total Cards: ' + cardIds.length + '\n\n';
+            
+            cardIds.forEach(function(id) {
+                var card = getCardById(id);
+                output += card.emoji + ' ' + card.name + '\n';
+                output += '  Suit: ' + card.suit + ' | Element: ' + card.element + '\n';
+                output += '  Keywords: ' + card.keywords.slice(0, 3).join(', ') + '\n\n';
+            });
+            
+            document.getElementById('cardDataOutput').textContent = output;
+        }
+        
+        function testRandomCard() {
+            var card = getRandomCard();
+            var output = '=== RANDOM CARD DRAW ===\n\n';
+            output += card.emoji + ' ' + card.name + '\n\n';
+            output += 'Suit: ' + card.suit + '\n';
+            output += 'Element: ' + card.element + '\n';
+            output += 'Keywords: ' + card.keywords.join(', ') + '\n\n';
+            output += 'Upright Meaning:\n' + card.uprightMeaning + '\n\n';
+            output += 'Reversed Meaning:\n' + card.reversedMeaning;
+            
+            document.getElementById('cardDataOutput').textContent = output;
+        }
+        
+        function testRandomCards() {
+            var cards = getRandomCards(3);
+            var output = '=== THREE RANDOM CARDS ===\n\n';
+            
+            cards.forEach(function(card, i) {
+                output += (i + 1) + '. ' + card.emoji + ' ' + card.name + '\n';
+                output += '   ' + card.keywords.slice(0, 2).join(', ') + '\n\n';
+            });
+            
+            document.getElementById('cardDataOutput').textContent = output;
+        }
+        
+        function testCardsBySuit() {
+            var suits = ['major', 'cups', 'wands', 'pentacles', 'swords'];
+            var output = '=== CARDS BY SUIT ===\n\n';
+            
+            suits.forEach(function(suit) {
+                var cards = getCardsBySuit(suit);
+                output += suit.toUpperCase() + ': ' + cards.length + ' card(s)\n';
+                cards.forEach(function(card) {
+                    output += '  - ' + card.emoji + ' ' + card.name + '\n';
+                });
+                output += '\n';
+            });
+            
+            document.getElementById('cardDataOutput').textContent = output;
+        }
+        
+        // Birth Card Calculator
+        function calculateBirthCardDemo() {
+            var input = document.getElementById('birthDateInput').value;
+            if (!input) {
+                alert('Please enter a birth date');
+                return;
+            }
+            
+            var birthDate = new Date(input);
+            currentBirthDate = birthDate;
+            
+            var birthCardNumber = calculateBirthCard(birthDate);
+            var birthCardId = getBirthCardId(birthDate);
+            var isImplemented = isCardImplemented(birthCardNumber);
+            
+            var output = '=== BIRTH CARD CALCULATION ===\n\n';
+            output += 'Birth Date: ' + formatBirthDate(birthDate) + '\n\n';
+            output += 'Calculation:\n';
+            output += 'Year: ' + birthDate.getFullYear() + '\n';
+            output += 'Month: ' + (birthDate.getMonth() + 1) + '\n';
+            output += 'Day: ' + birthDate.getDate() + '\n\n';
+            output += 'Birth Card Number: ' + birthCardNumber + '\n';
+            output += 'Birth Card ID: ' + (birthCardId || 'NOT IMPLEMENTED') + '\n';
+            output += 'Card Available: ' + (isImplemented ? 'Yes ✅' : 'No (coming soon)') + '\n\n';
+            
+            if (isImplemented && birthCardId) {
+                var card = getCardById(birthCardId);
+                if (card) {
+                    output += '--- YOUR BIRTH CARD ---\n\n';
+                    output += card.emoji + ' ' + card.name + '\n\n';
+                    output += 'Keywords: ' + card.keywords.join(', ') + '\n\n';
+                    output += card.uprightMeaning;
+                }
+            } else {
+                output += 'Note: Your birth card (Major Arcana #' + birthCardNumber + ') will be added soon!\n';
+                output += 'The calculation is working correctly. ✅';
+            }
+            
+            document.getElementById('birthCardOutput').textContent = output;
+        }
+        
+        // Daily Card Calculator
+        function calculateDailyCardDemo() {
+            if (!currentBirthDate) {
+                alert('Please calculate your birth card first (section 2 above)');
+                return;
+            }
+            
+            var input = document.getElementById('dailyDateInput').value;
+            if (!input) {
+                alert('Please enter a date');
+                return;
+            }
+            
+            var date = new Date(input);
+            var birthCardNumber = calculateBirthCard(currentBirthDate);
+            var dailyCardNumber = calculateDailyCard(birthCardNumber, date);
+            var dailyCardId = getDailyCardId(currentBirthDate, date);
+            var isImplemented = isCardImplemented(dailyCardNumber);
+            
+            var output = '=== DAILY CARD CALCULATION ===\n\n';
+            output += 'Birth Date: ' + formatBirthDate(currentBirthDate) + '\n';
+            output += 'Daily Date: ' + formatBirthDate(date) + '\n\n';
+            output += 'Birth Card Number: ' + birthCardNumber + '\n';
+            output += 'Daily Card Number: ' + dailyCardNumber + '\n';
+            output += 'Daily Card ID: ' + (dailyCardId || 'NOT IMPLEMENTED') + '\n';
+            output += 'Card Available: ' + (isImplemented ? 'Yes ✅' : 'No (coming soon)') + '\n\n';
+            
+            if (isImplemented && dailyCardId) {
+                var card = getCardById(dailyCardId);
+                if (card) {
+                    output += '--- YOUR DAILY CARD ---\n\n';
+                    output += card.emoji + ' ' + card.name + '\n\n';
+                    output += 'Keywords: ' + card.keywords.join(', ') + '\n\n';
+                    output += card.uprightMeaning;
+                }
+            } else {
+                output += 'Note: Your daily card (Major Arcana #' + dailyCardNumber + ') will be added soon!\n';
+                output += 'The calculation is working correctly. ✅';
+            }
+            
+            document.getElementById('dailyCardOutput').textContent = output;
+        }
+        
+        // Reading Generator
+        function generateReadingDemo() {
+            var spreadType = document.getElementById('spreadTypeSelect').value;
+            var question = document.getElementById('questionInput').value;
+            
+            var cardCount = spreadType === 'daily' || spreadType === 'birthCard' ? 1 : 3;
+            var cards = getRandomCards(cardCount);
+            var cardIds = cards.map(function(c) { return c.id; });
+            
+            var reading = generateGenericReading(cardIds, spreadType, question);
+            
+            if (reading) {
+                var output = formatGenericReading(reading);
+                document.getElementById('readingOutput').textContent = output;
+            } else {
+                document.getElementById('readingOutput').textContent = 'Error generating reading';
+            }
+        }
+        
+        // Avatar Theme Display
+        function showAvatarTheme(avatarId) {
+            var avatar = AVATAR_CONFIGS[avatarId];
+            if (!avatar) return;
+            
+            var output = '=== ' + avatar.name.toUpperCase() + ' THEME DATA ===\n\n';
+            
+            output += '--- BASIC INFO ---\n';
+            output += 'Icon: ' + avatar.icon + '\n';
+            output += 'Element: ' + avatar.element + '\n';
+            output += 'Suit: ' + avatar.suit + '\n\n';
+            
+            output += '--- COLORS ---\n';
+            output += 'Primary: ' + avatar.theme.colors.primary + '\n';
+            output += 'Secondary: ' + avatar.theme.colors.secondary + '\n';
+            output += 'Accent: ' + avatar.theme.colors.accent + '\n';
+            output += 'Glow: ' + avatar.theme.colors.glow + '\n\n';
+            
+            output += '--- PERSONALITY ---\n';
+            output += 'Tagline: ' + avatar.personality.tagline + '\n\n';
+            output += 'Archetype: ' + avatar.personality.archetype + '\n\n';
+            output += 'Advice Style: ' + avatar.personality.adviceType + '\n\n';
+            output += 'Backstory: ' + avatar.personality.backstory + '\n\n';
+            output += 'Theme Song: ' + avatar.personality.themeSong + '\n\n';
+            output += 'Best For: ' + avatar.personality.bestFor + '\n\n';
+            
+            output += '--- VOICE MARKERS ---\n';
+            avatar.personality.voiceMarkers.forEach(function(marker) {
+                output += '  • ' + marker + '\n';
+            });
+            output += '\n';
+            
+            output += '--- THEME ELEMENTS ---\n';
+            output += 'Backgrounds: ' + avatar.theme.backgrounds.join(', ') + '\n';
+            output += 'Sacred Objects: ' + avatar.theme.sacredObjects.join(', ') + '\n';
+            
+            document.getElementById('avatarThemeOutput').textContent = output;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+/* ========================================
+   MAJESTIC - COMPONENT STYLES
+   Reusable component patterns
+   ======================================== */
+
+/* Buttons */
+.btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+.btn-primary:hover {
+    background: var(--color-accent-glow);
+    border-color: var(--color-accent-glow);
+}
+
+.back-btn {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Avatar Grid */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.avatar-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-card.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.avatar-card:not(.disabled):hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.avatar-card.selected {
+    border-color: var(--color-accent);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.avatar-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.avatar-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.avatar-element {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+/* Reading Type Cards */
+.reading-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.reading-type-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: 40px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reading-type-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.reading-type-icon {
+    font-size: 64px;
+    margin-bottom: var(--spacing-md);
+}
+
+.reading-type-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: var(--spacing-sm);
+}
+
+.reading-type-subtitle {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+/* Card Display */
+.cards-display {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: var(--spacing-lg) 0;
+    flex-wrap: wrap;
+}
+
+.card-position {
+    text-align: center;
+}
+
+.tarot-card {
+    width: 180px;
+    height: 300px;
+    background: linear-gradient(135deg, #2d1b69 0%, #1a0f3d 100%);
+    border: 3px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    margin: 0 auto 15px;
+    position: relative;
+}
+
+.tarot-card.jumping {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+}
+
+.position-label {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Interpretation Section */
+.interpretation-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.interpretation-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: var(--spacing-md);
+}
+
+.interpretation-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-primary);
+    margin-bottom: 30px;
+}
+
+.reflection-points {
+    list-style: none;
+    padding: 0;
+}
+
+.reflection-points li {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.reflection-points li:last-child {
+    border-bottom: none;
+}
+
+.reflection-points li::before {
+    content: "✦";
+    color: var(--color-accent);
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+/* Avatar-specific borders and backgrounds */
+.olivia .interpretation-section {
+    border-left: 4px solid #7ED321;  /* Olivia primary */
+}
+
+.olivia {
+    background: linear-gradient(135deg, rgba(126, 211, 33, 0.1) 0%, rgba(104, 159, 56, 0.1) 100%);
+}
+
+.elijah .interpretation-section {
+    border-left: 4px solid #9E9E9E;  /* Elijah primary */
+}
+
+.elijah {
+    background: linear-gradient(135deg, rgba(158, 158, 158, 0.1) 0%, rgba(117, 117, 117, 0.1) 100%);
+}
+
+.destiny .interpretation-section {
+    border-left: 4px solid #2196F3;  /* Destiny primary */
+}
+
+.destiny {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
+}
+
+.casper .interpretation-section {
+    border-left: 4px solid #FF5722;  /* Casper primary */
+}
+
+.casper {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.1) 0%, rgba(244, 81, 30, 0.1) 100%);
+}
+
+/* Avatar Header */
+.avatar-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.avatar-reading-icon {
+    font-size: 80px;
+    margin-bottom: var(--spacing-md);
+}
+
+.avatar-reading-name {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+}
+
+.avatar-tagline {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+/* Music Note */
+.music-note {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: 30px 0;
+    border-left: 4px solid var(--color-accent);
+}
+
+.music-note-title {
+    font-size: 14px;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.music-note-content {
+    font-size: 16px;
+    color: var(--color-text-primary);
+    font-style: italic;
+}
+
+/* Jumping Card Container */
+.jumping-card-container {
+    margin-top: var(--spacing-lg);
+    padding: 30px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    border-radius: var(--radius-lg);
+}
+
+.jumping-card-label {
+    font-size: 20px;
+    color: #ff6b6b;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.loading-spinner {
+    font-size: 48px;
+}
+
+.loading-text {
+    margin-top: var(--spacing-md);
+    font-size: 16px;
+    color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .avatar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .avatar-icon {
+        font-size: 36px;
+    }
+
+    .avatar-name {
+        font-size: 16px;
+    }
+
+    .reading-types {
+        grid-template-columns: 1fr;
+    }
+
+    .cards-display {
+        gap: 15px;
+    }
+
+    .tarot-card {
+        width: 120px;
+        height: 200px;
+        font-size: 48px;
+    }
+
+    .interpretation-section {
+        padding: var(--spacing-md);
+    }
+
+    .avatar-reading-icon {
+        font-size: 64px;
+    }
+
+    .avatar-reading-name {
+        font-size: 28px;
+    }
+}
