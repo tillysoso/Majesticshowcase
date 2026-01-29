@@ -573,6 +573,139 @@
 .avatar-reading.casper .interpretation-section {
   background: rgba(42, 20, 14, 0.9);
   border: 2px solid rgba(249, 115, 22, 0.3);
+
+/* ==========================================
+   CARD DISPLAY STYLES FOR ALL AVATARS
+   ========================================== */
+
+/* Shared card display structure */
+.avatar-reading .card-display {
+  width: 16rem;
+  height: 24rem;
+  border-radius: 1rem;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-reading .card-display::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer-card 3s infinite;
+}
+
+@keyframes shimmer-card {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.avatar-reading .card-content {
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+.avatar-reading .card-number {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+.avatar-reading .card-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+/* Olivia card display */
+.avatar-reading.olivia .card-display {
+  background: linear-gradient(135deg, #8fbc8f, #6b8e23);
+  border: 2px solid #6b8e23;
+}
+
+/* Elijah card display */
+.avatar-reading.elijah .card-display {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: 2px solid #a855f7;
+}
+
+/* Destiny card display */
+.avatar-reading.destiny .card-display {
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  border: 2px solid #5eead4;
+}
+
+/* Casper card display */
+.avatar-reading.casper .card-display {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+  border: 2px solid #fdba74;
+}
+
+/* Card info section below card */
+.avatar-reading .card-info {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.avatar-reading .card-info h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.avatar-reading .card-info p {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Keywords display */
+.avatar-reading .keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.avatar-reading .keyword {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.avatar-reading.olivia .keyword {
+  background: rgba(107, 142, 35, 0.2);
+  border: 1px solid rgba(107, 142, 35, 0.3);
+}
+
+.avatar-reading.elijah .keyword {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.avatar-reading.destiny .keyword {
+  background: rgba(13, 148, 136, 0.2);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.avatar-reading.casper .keyword {
+  background: rgba(249, 115, 22, 0.2);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
 }
     </style>
 </head>
@@ -785,18 +918,27 @@
             // Build content
             var html = renderAvatarHeader(avatarConfig);
             
-            // Display cards
-            html += '<div class="cards-display">';
-            if (state.currentReading === 'daily') {
-                html += renderCard(cardData.card.emoji, cardData.card.name);
-            } else if (state.currentReading === 'birth') {
-                html += renderCard(cardData.card.emoji, cardData.card.name + '<br>Birth Date: ' + cardData.birthdate);
+            // Display cards with proper card-display structure
+            if (state.currentReading === 'daily' || state.currentReading === 'birth') {
+                html += '<div class="card-display">';
+                html += '<div class="card-content">';
+                html += '<p class="card-number">' + cardData.card.emoji + '</p>';
+                html += '<p class="card-name">' + cardData.card.name + '</p>';
+                html += '</div></div>';
+                
+                html += '<div class="card-info">';
+                html += '<h3>' + cardData.card.name + '</h3>';
+                if (state.currentReading === 'birth') {
+                    html += '<p>Birth Date: ' + cardData.birthdate + '</p>';
+                }
+                html += '</div>';
             } else {
+                html += '<div class="cards-display">';
                 cardData.cards.forEach(function(card) {
                     html += renderCard(card.emoji, card.name, card.position);
                 });
+                html += '</div>';
             }
-            html += '</div>';
             
             // Avatar interpretation
             html += renderInterpretation(reading.title, reading.text, reading.points);
